@@ -47,6 +47,10 @@
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
+    "json-server": "^0.17.0",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.15",
     "prop-types": "^15.8.1",
     "sass": "^1.48.0"
   }
