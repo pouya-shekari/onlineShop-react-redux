@@ -1,0 +1,1 @@
+import axios from 'axios';import {BASE_URL} from 'configs/variables.config';axios.defaults.baseURL = BASE_URL;
