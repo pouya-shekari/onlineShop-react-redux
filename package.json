@@ -25,7 +25,10 @@
     "start": "env-cmd -f ./src/environments/.env.develop react-scripts start",
     "build": "env-cmd -f ./src/environments/.env.production react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "backend": "node server",
+    "backend:dev": "nodemon server",
+    "backend:prod": "nodemon server"
   },
   "eslintConfig": {
     "extends": [
