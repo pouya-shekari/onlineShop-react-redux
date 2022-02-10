@@ -13,7 +13,6 @@ let canRefresh = true;
 class HttpService {
     constructor(entity) {
         this.entity = entity;
-        axios.defaults.baseURL = BASE_URL;
 
         axios.interceptors.request.use((config) => {
             let token = localStorage.getItem(config.url !== REFRESH_TOKEN_URL ? ACCESS_TOKEN : REFRESH_TOKEN);
@@ -73,32 +72,30 @@ class HttpService {
             })
 
         axios.defaults.timeout = 5000;
-        axios.defaults.baseURL = 'http://localhost:3001';
+        axios.defaults.baseURL = BASE_URL;
     }
+
 
     gets = (config)=>{
         return axios.get(this.entity, config)
     }
 
-    get(url, config) {
-        return axios.get(url, config);
+    get = (id, config)=>{
+        return axios.get(`/${this.entity}/${id}`, config)
     }
 
-    post(url, data, config) {
-        return axios.post(url, data, config);
+    post = (body)=>{
+        return axios.post(`/${this.entity}`, body)
     }
 
-    put(url, data, config) {
-        return axios.put(url, data, config);
+    patch = (id, body)=>{
+        return axios.patch(`/${this.entity}/${id}`, body)
     }
 
-    patch(url, data, config) {
-        return axios.patch(url, data, config);
+    delete = (id)=>{
+        return axios.delete(`/${this.entity}/${id}`)
     }
 
-    delete(url, config) {
-        return axios.delete(url, config);
-    }
 }
 
 export default HttpService;

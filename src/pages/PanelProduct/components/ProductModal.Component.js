@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Modal, Typography, MenuItem, Select, FormControl, TextField, Input } from '@material-ui/core';
 import { Cancel } from '@material-ui/icons';
 import modules from "./ProductsModal.module.scss"
-import {TextEditor} from "../index"
+import {TextEditor} from "./index"
 import productApi  from "/src/api/products.api"
-import groupApi from "../../api/groups.api"
+import groupApi from "/src/api/groups.api"
 
 function getModalStyle() {
     return {

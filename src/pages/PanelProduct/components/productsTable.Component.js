@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@material-ui/core';
+import {Grid, Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@material-ui/core';
+import Pagination from '@mui/material/Pagination';
 import { Link } from "react-router-dom"
-import {Pagination, PaginationItem} from '@material-ui/lab';
-import productApi from "../../api/products.api"
+import productApi from "/src/api/products.api"
 
 const useStyles = makeStyles({
     container:{
