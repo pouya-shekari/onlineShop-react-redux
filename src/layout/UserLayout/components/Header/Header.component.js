@@ -1,11 +1,10 @@
-import React from "react";
 import {Link} from 'react-router-dom';
 import {AppBar, makeStyles, Toolbar, Typography , Badge} from "@material-ui/core";
-import {ShoppingBasket} from "@material-ui/icons";
-import logo from 'assets/images/Lays-Logo.png';
+import {LocalMall, ShoppingBasket} from "@material-ui/icons";
 import {Navigation} from 'components';
 import {PATHS} from 'configs/routes.config';
 import {LINKS} from './Header.config';
+import React from "react";
 
 
 const useStyle = makeStyles((theme) => ({
@@ -53,7 +52,7 @@ const Header = (props) => {
             <AppBar>
                 <Toolbar className={classes.toolbar}>
                     <div className={classes.rightSide}>
-                        <img className={classes.image} src={logo} alt="Article Logo"/>
+                        <LocalMall className={classes.image} />
                         <Link to={PATHS.HOME}>
                             <Typography className={classes.title} variant="h6" noWrap>
                                 فروشگاه فلان
