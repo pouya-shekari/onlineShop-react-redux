@@ -16,6 +16,7 @@ class AppRoute extends Component {
           <Route path={PATHS.BASKET} element={<PublicRoute component={(props) => <Page.Basket {...props} />} />} />
           <Route path={PATHS.CHECKOUT} element={<PublicRoute component={(props) => <Page.Checkout {...props} />} />} />
           <Route path={PATHS.PAYMENT_RESULT} element={<PublicRoute component={(props) => <Page.PaymentResult {...props} />} />} />
+          <Route path={PATHS.NOT_FOUND} element={<PublicRoute component={(props) => <Page.NotFound {...props} />} />} />
           <Route path={PATHS.PANEL_LOGIN} element={<ProtectedRoute component={(props) => <Page.PanelLogin {...props} />} />} />
           <Route path={PATHS.PANEL_PRODUCT} element={<PrivateRoute component={(props) => <Page.PanelProduct {...props} />} />} />
           <Route path={PATHS.PANEL_QUANTITY} element={<PrivateRoute component={(props) => <Page.PanelQuantity {...props} />} />} />

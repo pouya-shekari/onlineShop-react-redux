@@ -4,7 +4,7 @@ import { Button, Modal, Typography, MenuItem, Select, FormControl, TextField, In
 import { Cancel } from '@material-ui/icons';
 import modules from "./ProductsModal.module.scss"
 import {TextEditor} from "../index"
-import productApi  from "../../api/products.api"
+import productApi  from "/src/api/products.api"
 import groupApi from "../../api/groups.api"
 
 function getModalStyle() {
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ProductModal(props) {
+const ProductModal = (props) => {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     const [open, setOpen] = useState(false);
@@ -251,6 +251,4 @@ export default function ProductModal(props) {
     );
 }
 
-export {
-    ProductModal
-}
+export {ProductModal}

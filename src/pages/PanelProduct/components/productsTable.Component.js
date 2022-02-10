@@ -34,7 +34,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function ProductsTable(props) {
+const ProductsTable = (props) => {
     const classes = useStyles();
     const [productsState, setProductsState] = useState([])
     const [pageState, setPageState] = useState({perpage:5,page:1})

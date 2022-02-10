@@ -1,10 +1,10 @@
 import {useState} from "react"
 import {AdminLayout} from "../../layout";
 import {Helmet} from 'react-helmet'
-import {ProductsTable, ProductModal} from "../../../components/index"
+import {ProductsTable, ProductModal} from "./components/index"
 import {Typography, Button, Grid} from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
-import productApi from "../../../api/products.api"
+import productApi from "/src/api/products.api"
 
 
 const useStyles = makeStyles({

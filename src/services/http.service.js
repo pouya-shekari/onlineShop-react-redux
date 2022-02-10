@@ -11,11 +11,11 @@ import errorMap from 'assets/data/error-map';
 let canRefresh = true;
 
 class HttpService {
-    constructor() {
+    constructor(entity) {
+        this.entity = entity;
         axios.defaults.baseURL = BASE_URL;
 
         axios.interceptors.request.use((config) => {
-            // console.log('CONFIG: ', config);
             let token = localStorage.getItem(config.url !== REFRESH_TOKEN_URL ? ACCESS_TOKEN : REFRESH_TOKEN);
             if (config.url !== LOGIN && (config.url === WHOAMI || token)) {
                 config.headers['token'] = `${token}`
@@ -54,24 +54,30 @@ class HttpService {
 
                         } catch (e) {
                             console.log('error refresh token: ', error.response);
-                            // if (error.response && error.response.status === 401) {
-                            //   canRefresh = false;
-                            // } else {
                             localStorage.setItem(IS_LOGGED_IN, false.toString());
-                            history.push(PATHS.SIGN_IN);
+                            history.push(PATHS.PANEL_LOGIN);
                             return Promise.reject(error);
                             // }
                         }
                     }
+                }
+                else if (error.response.status === 404) {
+                    window.location.pathname = '/404'
+                }
 
-
-
-                } else {
+                else {
                     toast.error(errorMap[error.response.status])
                     return Promise.reject(error);
                 }
 
             })
+
+        axios.defaults.timeout = 5000;
+        axios.defaults.baseURL = 'http://localhost:3001';
+    }
+
+    gets = (config)=>{
+        return axios.get(this.entity, config)
     }
 
     get(url, config) {
@@ -95,4 +101,4 @@ class HttpService {
     }
 }
 
-export default new HttpService();
+export default HttpService;

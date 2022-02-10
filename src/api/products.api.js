@@ -1,1 +1,1 @@
-import http from 'services/http.service';export async function getProducts() {    try {        const response = await http.get(`/products`);        return response.data;    } catch (e) {        return Promise.reject(e);    }}
+import HttpService from "services/http.service"const product = new HttpService('products')export default product
