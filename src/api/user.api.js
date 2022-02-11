@@ -1,5 +1,5 @@
 import {LOGIN, REFRESH_TOKEN, WHOAMI} from 'configs/url.config';
-import http from 'services/http.service';
+import http from "services/http.service"
 
 export async function login(data) {
     try {

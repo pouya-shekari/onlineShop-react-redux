@@ -4,8 +4,7 @@ import {Helmet} from 'react-helmet'
 import {ProductsTable, ProductModal} from "./components/index"
 import {Typography, Button, Grid} from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
-import productApi from "/src/api/products.api"
-
+import {deleteProduct} from "../../api/products.api"
 
 const useStyles = makeStyles({
     container:{
@@ -34,7 +33,7 @@ const PanelProduct  = () => {
 
     const openModalDeleteButtonHandler = async (row)=>{
         await setModalMode({...modalMode,mode:'delete'})
-        await productApi.delete(row.id)
+        await deleteProduct(row.id)
         setModalMode({...modalMode, mode:'default'})
     }
 

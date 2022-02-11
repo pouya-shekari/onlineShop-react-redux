@@ -4,10 +4,11 @@ import { Button, Modal, Typography, MenuItem, Select, FormControl, TextField, In
 import { Cancel } from '@material-ui/icons';
 import modules from "./ProductsModal.module.scss"
 import {TextEditor} from "./index"
-import productApi  from "/src/api/products.api"
-import groupApi from "/src/api/groups.api"
+import {patchProduct} from "../../../api/products.api"
+import {postProduct} from "../../../api/products.api"
+import {getGroup} from "../../../api/groups.api"
 
-function getModalStyle() {
+/*function getModalStyle() {
     return {
         top: `50%`,
         left: `50%`,
@@ -74,10 +75,16 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'row',
         justifyContent: 'space-between',
     }
-}));
+}));*/
 
 const ProductModal = (props) => {
-    const classes = useStyles();
+    return(
+        <>
+
+        </>
+    )
+}
+    /*const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     const [open, setOpen] = useState(false);
 
@@ -93,7 +100,7 @@ const ProductModal = (props) => {
 
     const handleOpen = async () => {
         setOpen(true);
-        const groups = await groupApi.gets()
+        const groups = await getGroup()
         await setGroupsState(groups.data)
     };
 
@@ -108,7 +115,7 @@ const ProductModal = (props) => {
 
     useEffect( ()=>{
         const getGroups = async () => {
-            const groups = await groupApi.gets()
+            const groups = await getGroup()
             await setGroupsState(groups.data)
             await props.setModalOpenHandler({modalHandler:handleOpen})
         }
@@ -146,7 +153,7 @@ const ProductModal = (props) => {
             formdata.append("group", group);
             formdata.append("headgroup", headgroup);
             formdata.append("description", description);
-            await productApi.patch(id, formdata)
+            await patchProduct(formdata , id)
             operationSuccess = true
         }
         else if (mode==='add'){
@@ -158,7 +165,7 @@ const ProductModal = (props) => {
             formdata.append("description", description);
             formdata.append("price", price);
             formdata.append("quantity", quantity);
-            await productApi.post(formdata)
+            await postProduct(formdata)
             operationSuccess = true
         }
         if(operationSuccess){
@@ -187,7 +194,7 @@ const ProductModal = (props) => {
                     <span className={classes.productInoutLabel}>:تصویر کالا</span>
                     <label className={modules.input_file_label}>
                         <span className={modules.upload_button}>Browse</span>
-                        <input ref={inputEl} id='input' type="file" className={modules.input_file} accept='image/*'  onChange={(event)=>inputChangeHandler(event, '')}/>
+                        <input ref={inputEl} id='input' type="file" className={modules.input_file} accept='image/!*'  onChange={(event)=>inputChangeHandler(event, '')}/>
                         <span className={modules.file_name} >file</span>
                     </label>
                 </div>
@@ -249,6 +256,6 @@ const ProductModal = (props) => {
             </Modal>
         </div>
     );
-}
+}*/
 
 export {ProductModal}

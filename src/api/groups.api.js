@@ -1,5 +1,11 @@
-import HttpService from "services/http.service"
+import http from 'services/http.service';
 
-const group = new HttpService('groups')
+export async function getGroup() {
+    try {
+        const response = await http.get(`/groups`);
+        return response;
+    } catch (e) {
+        return Promise.reject(e);
+    }
+}
 
-export default group

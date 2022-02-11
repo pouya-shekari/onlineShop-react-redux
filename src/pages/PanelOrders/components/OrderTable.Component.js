@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {Grid, Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@material-ui/core';
-import {Pagination , PaginationItem} from '@material-ui/lab'
+import { Grid, Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@material-ui/core';
 import { Link } from "react-router-dom"
-import {getProducts} from "../../../api/products.api"
+import {Pagination, PaginationItem} from '@material-ui/lab';
+import {e2p} from "../../../utils/LanguageNumberConvertor.utils";
+import {getOrders} from "../../../api/orders.api"
 
 const useStyles = makeStyles({
     container:{
@@ -26,17 +27,17 @@ const useStyles = makeStyles({
     table: {
         minWidth: 650,
     },
-    editDeleteButton:{
+    editOrderButton:{
         backgroundColor:'transparent',
-        border:'none',
-        color:'#463197',
-        textDecoration:'underline'
+        color:'blue',
+        textDecoration: 'underline',
+        border:'none'
     }
 });
 
-const ProductsTable = (props) => {
+const OrdersTable = (props) =>{
     const classes = useStyles();
-    const [productsState, setProductsState] = useState([])
+    const [ordersState, setOrdersState] = useState([])
     const [pageState, setPageState] = useState({perpage:5,page:1})
     const [pagesCountState, setPagesCount] = useState(null)
 
@@ -44,13 +45,13 @@ const ProductsTable = (props) => {
         await setPageState({...pageState,page:newPage})
     };
 
-    useEffect( ()=>{
-        const getProductsPerPage = async ()=>{
+    useEffect( async ()=>{
+        const getData = async () =>{
             try {
                 const { page, perpage } = pageState
-                const response = await getProducts({params:{_page:page, _limit:5}})
+                const response = await getOrders({params:{_page:page, _limit:5}})
 
-                await setProductsState(response.data)
+                await setOrdersState(response.data)
 
                 const productsCount = response.headers['x-total-count']
                 const pagesCount = Math.ceil( productsCount / perpage )
@@ -60,30 +61,18 @@ const ProductsTable = (props) => {
                 console.log(error)
             }
         }
-        getProductsPerPage()
+        getData()
     }, [])
 
     useEffect( ()=>{
-        const getProductsPerPage = async ()=>{
-            const { page } = pageState
-            const response = await getProducts({params:{_page:page, _limit:5}})
-            setProductsState(response.data)
-            getProductsPerPage()
+        const { page } = pageState
+        const {doneFilter:done} = props.filterProducts
+        const getData = async ()=>{
+            const response = await getOrders({params:{_page:page, _limit:5, delivered:done}})
+            setOrdersState(response.data)
         }
-    }, [pageState])
-
-    useEffect( ()=>{
-        const getProductsPerPage = async ()=>{
-            if(props.mode === 'default'){
-                const { page } = pageState
-                const response = await getProducts({params:{_page:page, _limit:5}})
-                setProductsState(response.data)
-            }
-        }
-        getProductsPerPage()
-    }, [props.mode])
-
-    const {openModalEditButtonHandler,openModalDeleteButtonHandler} = props
+        getData()
+    }, [pageState, props.filterProducts])
     return (
         <Grid item lg={8} md={10} sm ={10} xs={10} className={classes.container}>
             <TableContainer component={Paper}>
@@ -91,25 +80,22 @@ const ProductsTable = (props) => {
                     <TableHead className={classes.tableHeading}>
                         <TableRow>
                             <TableCell align="right"></TableCell>
-                            <TableCell align="right">دسته بندی</TableCell>
-                            <TableCell align="right">نام کالا</TableCell>
-                            <TableCell align="right">تصویر</TableCell>
+                            <TableCell align="right">زمان ثبت سفارش</TableCell>
+                            <TableCell align="right">مجموع مبلغ</TableCell>
+                            <TableCell align="right">نام کاربر</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {productsState.map((row, index) => {
-                            const { id, headgroup, group, name, image, description } = row
+                        {ordersState.map((row, index) => {
+                            const { id, name, familyName, cost, createdAt } = row
                             return (
                                 <TableRow className={index%2===0? classes.tableRow1 : classes.tableRow2} key={id}>
                                     <TableCell align="right" component="th" scope="row">
-                                        <button className={classes.editDeleteButton} onClick={(row)=>openModalEditButtonHandler({ id, headgroup, group, name, image, description })}>ویرایش</button>
-                                        <button className={classes.editDeleteButton} onClick={(row)=>openModalDeleteButtonHandler({ id, headgroup, group, name, image, description })}>حذف</button>
+                                        <button className={classes.editOrderButton} onClick={(event)=>props.modalHandleOpen(row)}>بررسی سفارش</button>
                                     </TableCell>
-                                    <TableCell align="right">{`${headgroup}/${group}`}</TableCell>
-                                    <TableCell align="right">{name}</TableCell>
-                                    <TableCell style={{display:'flex'}} align="right" component="th" scope="row">
-                                        <div style={{width: '70px', height:'70px', overflow: 'hidden'}}><img style={{width:"100%"}} src={`http://localhost:3001${image}`}/></div>
-                                    </TableCell>
+                                    <TableCell align="right">{new Date(createdAt).toLocaleDateString('fa-IR')}</TableCell>
+                                    <TableCell align="right">{e2p(''+cost)}</TableCell>
+                                    <TableCell style={{display:'flex'}} align="right" component="th" scope="row">{`${name} ${familyName}`}</TableCell>
                                 </TableRow>
                             )
                         })}
@@ -137,4 +123,4 @@ const ProductsTable = (props) => {
     );
 }
 
-export {ProductsTable}
+export {OrdersTable}

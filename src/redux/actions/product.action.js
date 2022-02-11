@@ -1,18 +1,18 @@
 import {getProducts} from 'api/products.api';
 
-export const setSelectedArticle = (data) => {
-    return {type: 'ARTICLE_SET_SELECTED_ARTICLE', payload: data};
+export const setProducts = (data) => {
+    return {type: 'PRODUCTS_GET_PRODUCTS', payload: data};
 };
 
 export const fetchProducts = () => {
     return (dispatch, getState) => {
         return getProducts()
             .then(response => {
+                dispatch(setProducts(response));
                 return response;
             })
             .catch(error => {
-                // throw new Error('error')
                 return Promise.reject(error);
             });
     }
-};
+}

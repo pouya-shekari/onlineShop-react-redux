@@ -11,8 +11,8 @@ import errorMap from 'assets/data/error-map';
 let canRefresh = true;
 
 class HttpService {
-    constructor(entity) {
-        this.entity = entity;
+    constructor() {
+        axios.defaults.baseURL = BASE_URL;
 
         axios.interceptors.request.use((config) => {
             let token = localStorage.getItem(config.url !== REFRESH_TOKEN_URL ? ACCESS_TOKEN : REFRESH_TOKEN);
@@ -59,43 +59,37 @@ class HttpService {
                             // }
                         }
                     }
-                }
-                else if (error.response.status === 404) {
-                    window.location.pathname = '/404'
-                }
-
-                else {
+                } else {
                     toast.error(errorMap[error.response.status])
                     return Promise.reject(error);
                 }
 
             })
-
-        axios.defaults.timeout = 5000;
-        axios.defaults.baseURL = BASE_URL;
     }
 
-
-    gets = (config)=>{
-        return axios.get(this.entity, config)
+    gets = (url,config)=>{
+        return axios.get(url, config)
     }
 
-    get = (id, config)=>{
-        return axios.get(`/${this.entity}/${id}`, config)
+    get(url, config) {
+        return axios.get(url, config);
     }
 
-    post = (body)=>{
-        return axios.post(`/${this.entity}`, body)
+    post(url, data) {
+        return axios.post(url, data);
     }
 
-    patch = (id, body)=>{
-        return axios.patch(`/${this.entity}/${id}`, body)
+    put(url, data, config) {
+        return axios.put(url, data, config);
     }
 
-    delete = (id)=>{
-        return axios.delete(`/${this.entity}/${id}`)
+    patch(url, data , id) {
+        return axios.patch(`${url}/${id}`, data);
     }
 
+    delete(url, id) {
+        return axios.delete(`${url}/${id}`);
+    }
 }
 
-export default HttpService;
+export default new HttpService();
