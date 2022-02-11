@@ -12,14 +12,13 @@ const useStyles = makeStyles({
         height:600,
         display: 'flex',
         flexDirection:'column',
-        justifyContent: 'space-between',
         alignItems: 'center'
     },
     tableHeading:{
         backgroundColor:'var(--light-face)'
     },
     tableRow1:{
-        backgroundColor:'#cfba93'
+        backgroundColor:'whitesmoke'
     },
     tableRow2:{
         backgroundColor:'var(--light-face)'

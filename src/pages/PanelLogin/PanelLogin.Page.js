@@ -47,13 +47,13 @@ const PanelLoginPage = props => {
                     <div className={styles.inputMargin}>
                         <label className={styles.loginLabels} htmlFor="username">نام کاربری</label>
                         <div>
-                            <input className={styles.loginInput} name="username"  id="username" type="text" placeholder="نام کاربری ..." />
+                            <input className={styles.loginInput} required={true} name="username"  id="username" type="text" placeholder="نام کاربری ..." />
                         </div>
                     </div>
                     <div className={styles.inputMargin}>
                         <label className={styles.loginLabels} htmlFor="password">رمز عبور</label>
                         <div>
-                            <input className={styles.loginInput} name="password" id="password" type="password" placeholder="کلمه عبور ..." />
+                            <input className={styles.loginInput} required={true} name="password" id="password" type="password" placeholder="کلمه عبور ..." />
                         </div>
                     </div>
 

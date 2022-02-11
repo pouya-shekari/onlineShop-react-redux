@@ -6,32 +6,32 @@ import { Link } from "react-router-dom"
 import {getProducts} from "../../../api/products.api"
 
 const useStyles = makeStyles({
-    container:{
-        margin:'20px auto 0',
-        height:600,
+    container: {
+        margin: '20px auto 0',
+        height: 600,
         display: 'flex',
-        flexDirection:'column',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
         alignItems: 'center'
     },
-    tableHeading:{
-        backgroundColor:'var(--light-face)'
+    tableHeading: {
+        backgroundColor: 'var(--light-face)'
     },
-    tableRow1:{
-        backgroundColor:'#cfba93'
+    tableRow1: {
+        backgroundColor: 'whitesmoke'
     },
-    tableRow2:{
-        backgroundColor:'var(--light-face)'
+    tableRow2: {
+        backgroundColor: 'var(--light-face)'
     },
     table: {
         minWidth: 650,
     },
-    editDeleteButton:{
-        backgroundColor:'transparent',
-        border:'none',
-        color:'#463197',
-        textDecoration:'underline'
-    }
+    editDeleteButton: {
+        backgroundColor: 'transparent',
+        border: 'none',
+        color: '#463197',
+        textDecoration: 'underline'
+    },
+
 });
 
 const ProductsTable = (props) => {
