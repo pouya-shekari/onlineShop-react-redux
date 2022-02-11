@@ -1,10 +1,12 @@
-import {useState} from "react"
+import {useState , useEffect} from "react"
 import {AdminLayout} from "../../layout";
 import {Helmet} from 'react-helmet'
 import {ProductsTable, ProductModal} from "./components/index"
 import {Typography, Button, Grid} from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
-import {deleteProduct} from "../../api/products.api"
+import {deleteProduct } from "../../api/products.api"
+import {connect} from 'react-redux';
+import {fetchProducts} from '../../redux/actions/product.action';
 
 const useStyles = makeStyles({
     container:{
@@ -16,7 +18,16 @@ const useStyles = makeStyles({
     }
 });
 
-const PanelProduct  = () => {
+const PanelProductPage  = (props) => {
+
+    useEffect(() => {
+        try {
+            this.props.getProducts();
+        } catch (e) {
+            console.log('error products');
+        }
+    }, []);
+
     const classes = useStyles();
     const [modalOpenHandler, setModalOpenHandler] = useState({modalHandler:null})
     const [modalMode, setModalMode] = useState({mode:null, data:null})
@@ -58,5 +69,13 @@ const PanelProduct  = () => {
         </>
     )
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getProducts: () => dispatch(fetchProducts())
+    }
+};
+
+const PanelProduct = connect(undefined, mapDispatchToProps)(PanelProductPage)
 
 export {PanelProduct}
