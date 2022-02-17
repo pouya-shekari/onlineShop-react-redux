@@ -5,7 +5,7 @@ import { Grid, makeStyles } from "@material-ui/core"
 import {useEffect, useState} from "react"
 import {getProducts} from "../../api/products.api"
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import { Spinner, ProductCard} from "./components"
+import { Spinner, ProductCard} from "../../components"
 import {getGroup} from "../../api/groups.api"
 import {e2p} from "../../utils/LanguageNumberConvertor.utils"
 import {numberWithCommas} from "../../utils/numberWithCommas.utils"
