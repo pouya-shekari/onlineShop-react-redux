@@ -8,7 +8,7 @@ import {patchProduct} from "../../../api/products.api"
 import {postProduct} from "../../../api/products.api"
 import {getGroup} from "../../../api/groups.api"
 
-/*function getModalStyle() {
+function getModalStyle() {
     return {
         top: `50%`,
         left: `50%`,
@@ -75,16 +75,10 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'row',
         justifyContent: 'space-between',
     }
-}));*/
+}));
 
 const ProductModal = (props) => {
-    return(
-        <>
-
-        </>
-    )
-}
-    /*const classes = useStyles();
+    const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     const [open, setOpen] = useState(false);
 
@@ -194,7 +188,7 @@ const ProductModal = (props) => {
                     <span className={classes.productInoutLabel}>:تصویر کالا</span>
                     <label className={modules.input_file_label}>
                         <span className={modules.upload_button}>Browse</span>
-                        <input ref={inputEl} id='input' type="file" className={modules.input_file} accept='image/!*'  onChange={(event)=>inputChangeHandler(event, '')}/>
+                        <input ref={inputEl} id='input' type="file" className={modules.input_file} accept='image/*'  onChange={(event)=>inputChangeHandler(event, '')}/>
                         <span className={modules.file_name} >file</span>
                     </label>
                 </div>
@@ -256,6 +250,6 @@ const ProductModal = (props) => {
             </Modal>
         </div>
     );
-}*/
+}
 
 export {ProductModal}

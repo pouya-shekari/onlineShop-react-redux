@@ -3,6 +3,7 @@ import {useRef} from 'react';
 import {Helmet} from 'react-helmet';
 import {connect} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom'
 import {login} from 'redux/actions/user.action';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
@@ -41,9 +42,10 @@ const PanelLoginPage = props => {
             </Helmet>
             <div className={styles.loginPage}>
                 <div className={styles.userIcon}>
-                    <FontAwesomeIcon style={{fontSize:'10rem' , color:'lightgray'}} icon={faUser} />
+                    <FontAwesomeIcon style={{fontSize:'15rem' , color:'lightgray'}} icon={faUser} />
                 </div>
                 <form className={styles.mainForm} onSubmit={handleSubmit} ref={formRef}>
+                    <h3 className={styles.headerLogin}>ورود به پنل مدیریت فروشگاه</h3>
                     <div className={styles.inputMargin}>
                         <label className={styles.loginLabels} htmlFor="username">نام کاربری</label>
                         <div>
@@ -57,7 +59,15 @@ const PanelLoginPage = props => {
                         </div>
                     </div>
 
-                    <button className={styles.button} type="submit">Login</button>
+                    <button className={styles.button} type="submit">ورود</button>
+
+                    <div className={styles.backHome}>
+                        <Link to="/">
+                            <div style={{color:'purple' , fontSize:'1.4rem'}}>
+                                بازگشت به سایت
+                            </div>
+                        </Link>
+                    </div>
                 </form>
             </div>
 

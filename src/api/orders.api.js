@@ -18,3 +18,20 @@ export async function patchOrder(data , id){
     }
 }
 
+export async function deleteOrder(id){
+    try{
+        const response = await http.delete('/orders',id)
+        return response
+    } catch (e){
+        return Promise.reject(e)
+    }
+}
+
+export async function postOrder(data){
+    try{
+        const response = await http.post('/orders/',data)
+        return response
+    }catch (e){
+        return Promise.reject(e)
+    }
+}

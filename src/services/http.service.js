@@ -26,7 +26,6 @@ class HttpService {
         });
 
         axios.interceptors.response.use((response) => {
-                // console.log('Interceptor response success', response);
                 canRefresh = true;
                 return response;
             },
@@ -56,7 +55,6 @@ class HttpService {
                             localStorage.setItem(IS_LOGGED_IN, false.toString());
                             history.push(PATHS.PANEL_LOGIN);
                             return Promise.reject(error);
-                            // }
                         }
                     }
                 } else {
