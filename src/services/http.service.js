@@ -65,12 +65,13 @@ class HttpService {
             })
     }
 
-    gets = (url,config)=>{
-        return axios.get(url, config)
-    }
 
     get(url, config) {
         return axios.get(url, config);
+    }
+
+    getId = (url,id)=>{
+        return axios.get(`${url}/${id}`)
     }
 
     post(url, data) {

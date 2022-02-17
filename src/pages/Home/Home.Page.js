@@ -55,7 +55,7 @@ const Home = (props)=>{
         {
             productsState.products.map(product=>{
                 const {name:groupName, id:groupId} = product.group
-                const groupLink = `/product/group/${groupId}/${groupName.trim().replaceAll(' ', '-')}`
+                const groupLink = `/products/group/${groupId}/${groupName.trim().replaceAll(' ', '-')}`
                 return (
                     <Fragment key={product.group.id}>
                         <Grid style={{display: 'flex', justifyContent: 'flex-end'}} item xs={12}>

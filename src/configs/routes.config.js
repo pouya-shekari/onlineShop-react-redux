@@ -1,7 +1,7 @@
 export const PATHS = {
   HOME: '/',
-  PRODUCTS: '/products',
-  PRODUCT: '/product',
+  PRODUCTS: '/products/group/:groupId/:groupName',
+  PRODUCT: '/product/:productId',
   BASKET: '/basket',
   CHECKOUT:'/checkout',
   PAYMENT_RESULT:'/payment-result',
