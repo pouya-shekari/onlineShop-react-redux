@@ -57,6 +57,7 @@
 
 .loginLabels{
   font-size: 1.2rem;
+  text-align: end;
 }
 
 .button{
@@ -72,7 +73,6 @@
 .backHome{
   width: 100%;
   display: flex;
-  justify-content: end;
   color: black!important;
   margin-top: 1rem;
 }

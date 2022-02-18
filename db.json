@@ -1,5 +1,17 @@
 {
-  "products": [],
+  "products": [
+    {
+      "name": "گوشی 1",
+      "group": "موبایل",
+      "headgroup": "الکترونیک",
+      "description": "<p>دارای کیفیت مناسب و عملکرد عالی</p>\r\n",
+      "price": 80000,
+      "quantity": 12,
+      "image": "/files/5cff5c7cb36a2f996b696ab086859363",
+      "createdAt": 1645162537053,
+      "id": 1
+    }
+  ],
   "groups": [
     {
       "name": "کفش مردانه",

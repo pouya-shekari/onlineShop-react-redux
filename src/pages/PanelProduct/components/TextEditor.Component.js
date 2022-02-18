@@ -4,7 +4,7 @@ import draftToHtml from 'draftjs-to-html';
 import {useEffect, useState} from "react"
 import classes from "./TextEditor.module.scss"
 
-const TextEditor = (props) => {
+const TextEditor = (props) =>{
     const toolbar = {
         options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji',],
         inline: {

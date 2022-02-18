@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Modal, Typography, MenuItem, Select, FormControl, TextField, Input } from '@material-ui/core';
+import { Button, Modal, Typography, MenuItem, Select, FormControl, TextField } from '@material-ui/core';
 import { Cancel } from '@material-ui/icons';
 import modules from "./ProductsModal.module.scss"
 import {TextEditor} from "./index"
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3),
     },
     modalHeader:{
-        width: 600,
+        width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         marginBottom: '20px'
@@ -55,10 +55,12 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'column',
         justifyContent:'space-between',
         direction:'rtl',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        width:'auto'
     },
     modalFooter:{
-        width:600,
+        display:'flex',
+        justifyContent:'center',
         textAlign:'center',
         marginTop: '100px'
     },
@@ -181,7 +183,7 @@ const ProductModal = (props) => {
 
                 <div className={classes.productInputContainer}>
                     <label className={classes.productInoutLabel}>نام کالا:</label>
-                    <TextField dir="rtl" placeholder="مثال : بیسکوییت" type="text" variant="outlined" value={name} onChange={(event)=>inputChangeHandler(event, 'name')}/>
+                    <TextField dir="rtl" placeholder="مثال : گوشی 1" type="text" variant="outlined" value={name} onChange={(event)=>inputChangeHandler(event, 'name')}/>
                 </div>
 
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
@@ -224,7 +226,7 @@ const ProductModal = (props) => {
                     }
                 </div>
 
-                <div className={classes.productInputContainer}>
+                <div id="textEditorSection" className={classes.productInputContainer}>
                     <label className={classes.productInoutLabel}>توضیحات کالا:</label>
                     <TextEditor handleChange={setProductDescription} defaultText={description} />
                 </div>

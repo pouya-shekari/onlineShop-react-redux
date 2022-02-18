@@ -33,7 +33,7 @@ const useStyle = makeStyles((theme) => ({
         },
         title:{
             color:'#fff',
-            fontSize:'2.5rem',
+            fontSize:'2.5rem!important',
             fontFamily:'IRANSansX-Bold'
         },
         backToSite:{
