@@ -10,6 +10,28 @@
       "image": "/files/5cff5c7cb36a2f996b696ab086859363",
       "createdAt": 1645162537053,
       "id": 1
+    },
+    {
+      "name": "کفش 1",
+      "group": "کفش مردانه",
+      "headgroup": "کفش و کتانی",
+      "description": "<p>کفش مناسب پیاده روی</p>\r\n",
+      "price": "40000",
+      "quantity": "14",
+      "image": "/files/2be7ecc7808909ec2fb91a9218f888ee",
+      "createdAt": 1645162872600,
+      "id": 2
+    },
+    {
+      "name": "گوشی 2",
+      "group": "موبایل",
+      "headgroup": "الکترونیک",
+      "description": "<p>گوشی با عملکرد مناسب</p>\r\n",
+      "price": "70000",
+      "quantity": "7",
+      "image": "/files/9dd60c3c052c75913278135ac58f67f4",
+      "createdAt": 1645163529678,
+      "id": 3
     }
   ],
   "groups": [
