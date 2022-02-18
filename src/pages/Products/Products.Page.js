@@ -11,7 +11,7 @@ import {numberWithCommas} from "../../utils/numberWithCommas.utils"
 const useStyles = makeStyles((theme) => ({
     asideContainer:{
         height:'100vh',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
     },
     productGroupTitle:{
         textAlign:'right',
@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Products = (props) =>{
-    console.log(props)
     const classes = useStyles();
     const [groupsState, setGroupsState] = useState({ groups: [] })
     const [productsState, setProductsState] = useState({ products: [] })
@@ -43,7 +42,7 @@ const Products = (props) =>{
             const allgroups = []
             const response = await getGroup()
             const groups = response.data
-            groups.forEach(async (group , index)=>{
+            groups.map(async (group , index)=>{
                 const response = await getProducts({params: {group:group.name}})
                 allgroups.push({
                     group:group.name,
@@ -61,7 +60,6 @@ const Products = (props) =>{
     useEffect(async ()=>{
         const getProductByGroupName = async () =>{
             const response = await getProducts({params: {group:props.params.groupName.replaceAll('-', ' ')}})
-            console.log(response)
             const products = response.data
             await setProductsState({ products:products })
             setLoading({show:false})

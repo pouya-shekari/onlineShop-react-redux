@@ -1,8 +1,8 @@
 import {UserLayout} from "../../layout"
-import {withRouter, Link} from "react-router-dom"
+import { Link} from "react-router-dom"
 import {useEffect, useState} from "react"
 import {makeStyles, Typography } from "@material-ui/core"
-import {getProducts , getProductWithId} from "../../api/products.api"
+import { getProductWithId} from "../../api/products.api"
 import {e2p} from "../../utils/LanguageNumberConvertor.utils"
 import {numberWithCommas} from "../../utils/numberWithCommas.utils"
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme)=>({
         width:'100%',
         marginTop:theme.spacing(7),
         color:'var(--russian-violet)',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'end'
     },
     quantityInput:{
         width:'60px',
@@ -30,13 +33,14 @@ const useStyles = makeStyles((theme)=>({
         display:'flex',
         width:'200px',
         justifyContent: 'space-evenly',
-        backgroundColor:'var(--light-cyan)',
+        backgroundColor:'lightgreen',
         color:'var(--russian-violet)',
         borderRadius:'4px',
         border:'2px solid var(--russian-violet)',
         boxSizing:'border-box',
         height:'40px',
         lineHeight:'36px',
+        cursor:'pointer'
     },
     lineHeight:{
         lineHeight:'40px',
@@ -47,7 +51,9 @@ const useStyles = makeStyles((theme)=>({
         display:'flex',
         flexDirection:'row-reverse',
         width:'700px',
-        margin:'auto',
+        margin:'1rem 4rem',
+        alignItems:'center',
+        gap:'15rem'
     },
     productCategory:{
         display:'flex',
@@ -69,7 +75,7 @@ const useStyles = makeStyles((theme)=>({
     productDescription:{
         textAlign:'right',
         width:'700px',
-        margin:'auto',
+        margin:'0 4rem',
         direction:'rtl',
     },
     productName:{
@@ -104,7 +110,6 @@ const useStyles = makeStyles((theme)=>({
 }))
 
 const ProductPage = (props) => {
-    console.log(props)
     const classes = useStyles();
 
     const [ productsState, setProductsState] = useState({ })
@@ -119,7 +124,6 @@ const ProductPage = (props) => {
             product.groupId = groupResponse.data[0].id
             product.group = groupResponse.data[0].name
             await setProductsState(product)
-            console.log(productsState)
             setLoading({show:false})
         }
         getProductsByGroup()
@@ -159,7 +163,7 @@ const ProductPage = (props) => {
                     <div className={classes.productImage}>
                         <img className={classes.productImageItem} src={`http://localhost:3001${image}`}/>
                     </div>
-                    <div>
+                    <div style={{display:'flex' , flexDirection:'column' , gap:'2rem'}}>
                         <Typography className={classes.productName} variant="h4" component="h1">{name}</Typography>
                         <div className={classes.productCategory}>
                             <Typography variant="h6" component="p" className={classes.productSubCategoryTitle}>{headgroup}</Typography>

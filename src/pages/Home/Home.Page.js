@@ -14,7 +14,7 @@ import {numberWithCommas} from "../../utils/numberWithCommas.utils"
 const useStyles = makeStyles((theme) => ({
     groupTitle:{
         paddingRight: theme.spacing(8),
-        paddingTop: theme.spacing(13),
+        paddingTop: theme.spacing(5),
         cursor:'pointer',
         display:'flex',
         alignItems: 'center',
@@ -47,7 +47,6 @@ const Home = (props)=>{
             const productsGroup = responses.map( (res,i)=> ({group:groups[i], products:res.data}))
             await setLoading({show:false})
             setProductsState({products:productsGroup})
-
         })
     }, [])
 

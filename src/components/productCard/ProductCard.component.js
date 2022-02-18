@@ -8,18 +8,22 @@ const useStyles = makeStyles((theme) => ({
         margin:60,
         padding:"20px 20px 50px",
         position: 'relative',
-        boxShadow:"0 0 13px 8px rgb(234, 245, 255, .7)"
+        boxShadow:"0 0 13px 8px lightGray",
+        gap: '1rem',
     },
     img: {
-        width:170,
-        height:170
+        width:200,
+        height:170,
+
     },
     content:{
         textAlign:'right',
         width:'70%'
     },
     subtitle:{
-        color:'var(--russian-violet)'
+        color:'var(--russian-violet)',
+        marginTop:'1rem',
+        fontSize:'1.5rem'
     },
     title:{
         color:'var(--russian-violet)'
@@ -28,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         bottom:10,
         left:10,
-        backgroundColor:"rgb(234, 245, 255)",
+        backgroundColor:"#2196f3",
         padding:"5px 13px",
         borderRadius:"4px",
         textDecoration:'none'
@@ -43,7 +47,7 @@ const ProductCard = (props) => {
         <Grid item lg={lg} md={md} sm={sm} xs={xs} xl={xl} >
             <Card className={classes.card} onClick={()=>props.history.push(url)} >
                 <div className={classes.img}>
-                    <img style={{width:'100%'}} src={`http://localhost:3001${image}`}/>
+                    <img style={{width:'200px' , height:'170px'}} src={`http://localhost:3001${image}`}/>
                 </div>
                 <CardContent className={classes.content}>
                     <Typography variant="h5" component="h2" className={classes.title}>{name}</Typography>

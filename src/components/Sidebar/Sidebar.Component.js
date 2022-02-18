@@ -4,22 +4,25 @@ const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems:'flex-end'
+        alignItems:'flex-end',
+        borderLeft:'1px solid gray'
     },
     groupTitle:{
-        marginTop:theme.spacing(7),
-        marginBottom:theme.spacing(3),
+        marginTop:theme.spacing(0),
+        marginBottom:theme.spacing(1),
         textAlign:'right',
         color:'var(--russian-violet)'
     },
     groupCategory:{
         width:'80%',
-        paddingRight:theme.spacing(3),
-        color:'var(--russian-violet)',
+        paddingRight:theme.spacing(2),
+        color:'black',
+        marginBottom:'3rem'
     },
     subGroupTitle:{
         textAlign:'right',
         marginBottom:theme.spacing(1),
+        paddingRight:theme.spacing(2),
         color:'var(--lavender-floral)'
     },
     groupTitleLink:{
@@ -40,7 +43,7 @@ const Sidebar = (props) => {
                 props.groups.map(group=>{
                     const {groupId:id, products, group:name} = group
                     return <article className={classes.groupCategory} key={id}>
-                        <h4 className={classes.groupTitle}><a className={classes.groupCategoryLink} href={`/product/group/${id}/${name.trim().replaceAll(' ', '-')}`}>{name}</a></h4>
+                        <h4 className={classes.groupTitle}><a style={{fontSize:'1.5rem' , color:'black'}} className={classes.groupCategoryLink} href={`/products/group/${id}/${name.trim().replaceAll(' ', '-')}`}>{group.group}</a></h4>
                         {products.map(prod=>{
                             const {name, id:prodId} = prod
                             return (<p className={classes.subGroupTitle} key={prodId}>

@@ -18,10 +18,10 @@ const useStyles = makeStyles({
         backgroundColor:'var(--light-face)'
     },
     tableRow1:{
-        backgroundColor:'whitesmoke'
+        backgroundColor:'whitesmoke',
     },
     tableRow2:{
-        backgroundColor:'var(--light-face)'
+        backgroundColor:'var(--light-face)',
     },
     table: {
         minWidth: 650,
