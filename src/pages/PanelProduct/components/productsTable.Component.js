@@ -49,7 +49,6 @@ const ProductsTable = (props) => {
             try {
                 const { page, perpage } = pageState
                 const response = await getProducts({params:{_page:page, _limit:5}})
-
                 await setProductsState(response.data)
 
                 const productsCount = response.headers['x-total-count']
@@ -63,20 +62,23 @@ const ProductsTable = (props) => {
         getProductsPerPage()
     }, [])
 
+    const getProductsPerPage = async () =>{
+        const { page } = pageState
+        const response = await getProducts( {params:{_page:page, _limit:5}})
+        setProductsState(response.data)
+    }
+
     useEffect( ()=>{
-        const getProductsPerPage = async ()=>{
-            const { page } = pageState
-            const response = await getProducts({params:{_page:page, _limit:5}})
-            setProductsState(response.data)
-            getProductsPerPage()
-        }
+        getProductsPerPage()
     }, [pageState])
+
 
     useEffect( ()=>{
         const getProductsPerPage = async ()=>{
             if(props.mode === 'default'){
                 const { page } = pageState
                 const response = await getProducts({params:{_page:page, _limit:5}})
+                console.log(response.data)
                 setProductsState(response.data)
             }
         }

@@ -24,7 +24,7 @@ const PanelQuantity = () => {
 
     const saveButtonClickHandler = async (event) => {
         setEditMode({edit:'start'})
-        editingProductsState.forEach(async({id, quantity, price}, index)=>{
+        editingProductsState.map(async({id, quantity, price}, index)=>{
             const obj = {};
             if(quantity>=0){
                 obj.quantity = quantity

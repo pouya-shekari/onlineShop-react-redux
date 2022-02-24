@@ -7,6 +7,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import {deleteProduct } from "../../api/products.api"
 import {connect} from 'react-redux';
 import {fetchProducts} from '../../redux/actions/product.action';
+import { confirm } from "react-confirm-box";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles({
     container:{
@@ -43,8 +46,27 @@ const PanelProductPage  = (props) => {
     }
 
     const openModalDeleteButtonHandler = async (row)=>{
-        await setModalMode({...modalMode,mode:'delete'})
-        await deleteProduct(row.id)
+        const options = {
+            render: (message, onConfirm, onCancel) => {
+                return (
+                    <>
+                        <div style={{backgroundColor:'white' , padding:'2rem 4rem',marginLeft:'-10rem' , display:'flex',flexDirection:'column' , gap:'2rem' }}>
+                            <h1 style={{fontSize:'2rem'}}> {message} </h1>
+                            <div style={{display:'flex', justifyContent:'space-between' , direction:'rtl'}}>
+                                <button style={{backgroundColor:'green',padding:'0.5rem 1rem' , outline:'none' , border:'none' , color:'white'  , width:'45%' , borderRadius:'0.5rem' , cursor:'pointer'}} onClick={onConfirm}> بله </button>
+                                <button style={{backgroundColor:'red',padding:'0.5rem 1rem' , outline:'none' , border:'none' , color:'white' , width:'45%'  , borderRadius:'0.5rem' , cursor:'pointer'}} onClick={onCancel}> خیر </button>
+
+                            </div>
+                        </div>
+                    </>
+                );
+            }
+        };
+        const result = await confirm("آیا از حذف این محصول مطمئن هستید؟", options);
+        if (result) {
+            toast.success("آیتم با موفقیت حذف شد");
+            await deleteProduct(row.id)
+        }
         setModalMode({...modalMode, mode:'default'})
     }
 
