@@ -122,7 +122,6 @@ const ProductPage = (props) => {
             const product = response.data
             const groupResponse = await getGroup({params:{name:product.group}})
             product.groupId = groupResponse.data[0].id
-            product.group = groupResponse.data[0].name
             await setProductsState(product)
             setLoading({show:false})
         }
@@ -169,7 +168,7 @@ const ProductPage = (props) => {
                             <Typography variant="h6" component="p" className={classes.productSubCategoryTitle}>{headgroup}</Typography>
                             <Typography variant="h6" component="p" className={classes.productCategoryTitle}>
                                 <ArrowLeftIcon style={{color:'var(--lavender-floral)'}}/>
-                                <Link to={`/product/group/${groupId}/${group.trim().replaceAll(' ', '-')}`} className={classes.productCategoryTitleLink}>{group}</Link>
+                                <Link to={`/products/group/${groupId}/${group.trim().replaceAll(' ', '-')}`} className={classes.productCategoryTitleLink}>{group}</Link>
                             </Typography>
                         </div>
                         <Typography variant="h5" component="p" className={classes.productPrice}>{e2p(numberWithCommas(''+price))} تومان</Typography>

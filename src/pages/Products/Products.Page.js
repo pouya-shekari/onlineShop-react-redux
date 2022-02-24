@@ -7,6 +7,8 @@ import {getGroup} from "../../api/groups.api"
 import {getProducts} from "../../api/products.api"
 import {e2p} from "../../utils/LanguageNumberConvertor.utils"
 import {numberWithCommas} from "../../utils/numberWithCommas.utils"
+import {Pagination, PaginationItem} from "@material-ui/lab";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     asideContainer:{
@@ -36,6 +38,12 @@ const Products = (props) =>{
     const [groupsState, setGroupsState] = useState({ groups: [] })
     const [productsState, setProductsState] = useState({ products: [] })
     const [loading, setLoading] = useState({ show: true })
+    const [pageState, setPageState] = useState({perpage:3,page:1})
+    const [pagesCountState, setPagesCount] = useState(null)
+
+    const handleChange = async (event, newPage) => {
+        setPageState({...pageState,page:newPage})
+    };
 
     useEffect( ()=>{
         const getGroupsAndProducts = async () => {
@@ -59,13 +67,31 @@ const Products = (props) =>{
 
     useEffect(async ()=>{
         const getProductByGroupName = async () =>{
-            const response = await getProducts({params: {group:props.params.groupName.replaceAll('-', ' ')}})
-            const products = response.data
-            await setProductsState({ products:products })
-            setLoading({show:false})
+            try {
+                const response = await getProducts({params: {_limit:3,_page:1,group:props.params.groupName.replaceAll('-', ' ')}})
+                const products = response.data
+                await setProductsState({ products:products })
+                setLoading({show:false})
+
+                const productsCount = response.headers['x-total-count']
+                const pagesCount = Math.ceil( productsCount / pageState.perpage )
+                setPagesCount(pagesCount)
+
+            }
+            catch (e){}
         }
         getProductByGroupName()
     }, [])
+
+    const getProductsPerPage = async () =>{
+        const { page } = pageState
+        const response = await getProducts( {params:{_page:page, _limit:3 , group:props.params.groupName.replaceAll('-', ' ')}})
+        setProductsState({ products:response.data })
+    }
+
+    useEffect( ()=>{
+        getProductsPerPage()
+    }, [pageState])
 
     const pageContent = (
         <div style={{display:'flex', }}>
@@ -88,6 +114,22 @@ const Products = (props) =>{
         <div>
             <UserLayout>
                 <Spinner isLoading={loading.show} content={pageContent} />
+                <Pagination style={{display:'flex' , justifyContent:'center'}}
+                    hidePrevButton
+                    hideNextButton
+                    showFirstButton
+                    showLastButton
+                    count={pagesCountState}
+                    page={pageState.page}
+                    onChange={handleChange}
+                    renderItem={(item) => (
+                        <PaginationItem
+                            component={Link}
+                            to={`?page=${item.page}`}
+                            {...item}
+                        />
+                    )}
+                />
             </UserLayout>
         </div>
     )
