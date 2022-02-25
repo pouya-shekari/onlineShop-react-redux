@@ -48,7 +48,7 @@ const Products = (props) =>{
     useEffect( ()=>{
         const getGroupsAndProducts = async () => {
             const allgroups = []
-            const response = await getGroup()
+            const response = await getGroup('')
             const groups = response.data
             groups.map(async (group , index)=>{
                 const response = await getProducts({params: {group:group.name}})

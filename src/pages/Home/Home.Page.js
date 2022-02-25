@@ -41,7 +41,7 @@ const Home = (props)=>{
     const [loading, setLoading] = useState({show:true});
     const [ productsState, setProductsState ] = useState({products:[]})
     useEffect(async()=>{
-        const response = await getGroup()
+        const response = await getGroup('')
         const groups = response.data
         Promise.all(groups.map((group, index) => getProducts({params: {group:group.name, _limit:4}}))).then(async (responses)=>{
             const productsGroup = responses.map( (res,i)=> ({group:groups[i], products:res.data}))

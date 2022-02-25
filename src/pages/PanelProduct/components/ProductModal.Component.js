@@ -62,8 +62,7 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         justifyContent:'center',
         textAlign:'center',
-        marginTop: '60px',
-        marginBottom: '-15px',
+        marginTop: '100px'
     },
     productInoutLabel:{
         margin:'0 0 5px 0'
@@ -174,25 +173,24 @@ const ProductModal = (props) => {
     const {id, name, description, group, price, quantity} = productState.product
     const body = (
         <div className={classes.paper} style={modalStyle}>
-
             <header className={classes.modalHeader}>
                 <button type="button" onClick={handleClose} className={classes.modalCloseButton}>
                     <Cancel />
                 </button>
                 <Typography>افزودن / ویرایش کالا</Typography>
             </header>
-            <form onSubmit={(event)=>submitButtonHandler(event,  productState.product)}>
+            <form>
 
                 <div className={classes.productInputContainer}>
                     <label className={classes.productInoutLabel}>نام کالا:</label>
-                    <TextField required={true} dir="rtl" placeholder="مثال : گوشی 1" type="text" variant="outlined" value={name} onChange={(event)=>inputChangeHandler(event, 'name')}/>
+                    <TextField dir="rtl" placeholder="مثال : گوشی 1" type="text" variant="outlined" value={name} onChange={(event)=>inputChangeHandler(event, 'name')}/>
                 </div>
 
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
                     <span className={classes.productInoutLabel}>:تصویر کالا</span>
                     <label className={modules.input_file_label}>
                         <span className={modules.upload_button}>Browse</span>
-                        <input required={true} ref={inputEl} id='input' type="file" className={modules.input_file} accept='image/*'  onChange={(event)=>inputChangeHandler(event, '')}/>
+                        <input ref={inputEl} id='input' type="file" className={modules.input_file} accept='image/*'  onChange={(event)=>inputChangeHandler(event, '')}/>
                         <span className={modules.file_name} >file</span>
                     </label>
                 </div>
@@ -202,7 +200,7 @@ const ProductModal = (props) => {
 
                     <FormControl className={classes.productGroup}>
                         <label  className={classes.productInoutLabel}>دسته بندی:</label>
-                        <Select required={true}
+                        <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             variant="outlined"
@@ -218,23 +216,23 @@ const ProductModal = (props) => {
                     {
                         props.mode==='add' ? (<><div className={classes.productInputContainer}>
                             <label className={classes.productInoutLabel}>موجودی:</label>
-                            <TextField required={true} style={{width:'190px'}} dir="rtl" type="number" variant="outlined" value={quantity} onChange={(event)=>inputChangeHandler(event, 'quantity')}/>
+                            <TextField style={{width:'190px'}} dir="rtl" type="number" variant="outlined" value={quantity} onChange={(event)=>inputChangeHandler(event, 'quantity')}/>
                         </div>
 
                             <div className={classes.productInputContainer}>
                                 <label className={classes.productInoutLabel}>قیمت:</label>
-                                <TextField required={true} style={{width:'190px'}} dir="rtl" type="number" variant="outlined" value={price} onChange={(event)=>inputChangeHandler(event, 'price')}/>
+                                <TextField style={{width:'190px'}} dir="rtl" type="number" variant="outlined" value={price} onChange={(event)=>inputChangeHandler(event, 'price')}/>
                             </div></>) : null
                     }
                 </div>
 
                 <div id="textEditorSection" className={classes.productInputContainer}>
                     <label className={classes.productInoutLabel}>توضیحات کالا:</label>
-                    <TextEditor required={true} handleChange={setProductDescription} defaultText={description} />
+                    <TextEditor handleChange={setProductDescription} defaultText={description} />
                 </div>
 
                 <footer className={classes.modalFooter}>
-                    <Button  type="submit" color="primary" background="primary" >ذخیره</Button>
+                    <Button  type="submit" color="primary" background="primary" onClick={(event)=>submitButtonHandler(event,  productState.product)}>ذخیره</Button>
                 </footer>
             </form>
         </div>
