@@ -42,11 +42,12 @@ const styles = makeStyles({
         cursor:'pointer'
     },
     buyButton:{
-        backgroundColor:'#fff',
-        border:'2px solid var(--lavender-floral)',
+        backgroundColor:'green',
         padding:'5px 10px',
-        color:'var(--lavender-floral)',
+        color:'#fff',
         textDecoration:'none',
+        fontSize:'1.5rem',
+        borderRadius:'0.5rem'
     },
     tableHeaders:{
         color:'var(--russian-violet)',
@@ -61,11 +62,13 @@ const styles = makeStyles({
     cartPriceTypography:{
         direction:'rtl',
         marginLeft:'15px',
-        color:'var(--lavender-floral)'
+        color:'var(--lavender-floral)',
+        fontSize:'2.5rem'
     },
     cartPriceCost:{
         direction:'rtl',
         marginLeft:'7.5px',
+        fontSize:'2.5rem'
     }
 });
 
@@ -123,7 +126,7 @@ const basketPage = (props) => {
                             </TableHead>
                             <TableBody>
                                 {props.userCart.map((row, index) => (
-                                    <TableRow style={{backgroundColor:index%2===0?'var(--beau-blue)':'var(--light-cyan)'}} key={row.id}>
+                                    <TableRow style={{backgroundColor:index%2===0?'whitesmoke':'var(--light-face)'}} key={row.id}>
                                         <TableCell component="th" scope="row">
                                             <button className={classes.deleteButton} onClick={(event)=>removeFromcartButtonClickHandler(event, row)}>حذف</button>
                                         </TableCell>

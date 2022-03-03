@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme)=>({
         display:'flex',
         width:'200px',
         justifyContent: 'space-evenly',
-        backgroundColor:'lightgreen',
+        backgroundColor:'green',
         color:'var(--russian-violet)',
         borderRadius:'4px',
         border:'2px solid var(--russian-violet)',
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme)=>({
         lineHeight:'40px',
         height:'40px',
         display: 'inline-block',
+        color:'white'
     },
     productMainInfo:{
         display:'flex',
@@ -115,11 +116,13 @@ const ProductPage = (props) => {
     const [ productsState, setProductsState] = useState({ })
     const [ cartcount, setCartCount] = useState({ quantity:1 })
     const [loading, setLoading] = useState({ show: true })
+    const [quantity , setQuantity] = useState(1)
 
     useEffect( () =>{
         const getProductsByGroup = async ()=>{
             const response = await getProductWithId(props.params.productId)
             const product = response.data
+            setQuantity(response.data.quantity)
             const groupResponse = await getGroup({params:{name:product.group}})
             product.groupId = groupResponse.data[0].id
             await setProductsState(product)
@@ -176,7 +179,7 @@ const ProductPage = (props) => {
                             <button className={[classes.cartButton]} onClick={(event)=>addToCartButtonClickHandler(event, {name,price:+price,id})}>
                                 <ControlPointIcon className={classes.lineHeight}/><div className={classes.lineHeight}>افزودن به سبد خرید</div>
                             </button>
-                            <input onChange={cartQuantityChangeHandler} value={cartcount.quantity} min="1" className={classes.quantityInput} type="number" />
+                            <input onChange={cartQuantityChangeHandler} value={cartcount.quantity} max={quantity} min="1" className={classes.quantityInput} type="number" />
                         </div>
                     </div>
                 </div>
