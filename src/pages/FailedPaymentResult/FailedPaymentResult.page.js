@@ -1,24 +1,11 @@
 import {UserLayout} from "../../layout";
-
-const FailedPaymentResult = (props)=>{
-    return(
-        <UserLayout>
-            پرداخت موفق
-        </UserLayout>
-    )
-}
-
-export {FailedPaymentResult}
-
-
-/*
-import {UserLayout} from "../../layout";
 import {Typography, Grid} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
 import CloseIcon from '@material-ui/icons/Close';
 import {Link} from "react-router-dom"
 import {useEffect} from "react"
 import {deleteOrder} from "../../api/orders.api"
+import {PATHS} from "../../configs/routes.config";
 
 const useStyles = makeStyles((theme) => ({
     header:{
@@ -31,8 +18,14 @@ const useStyles = makeStyles((theme) => ({
         width:'50%',
         justifyContent: 'center',
         margin:'auto',
+        flexDirection:'column',
+        alignItems: 'center',
+    },
+    info:{
+        display:'flex',
         flexDirection:'row-reverse',
-        alignItems: 'center'
+        alignItems:'center',
+        marginBottom:'5rem'
     },
     paymentIcon:{
         position:'relative',
@@ -40,15 +33,20 @@ const useStyles = makeStyles((theme) => ({
         height:'100px',
         borderRadius:'50%',
         backgroundColor:'red',
-        marginLeft:'40px'
+        marginLeft:'40px',
+        fontSize:'5rem'
     },
     paymentIconItem:{
         fill: '#ffff',
         position: 'absolute',
         top: '50%',
         left: '50%',
-        fontSize: 'xxx-large',
+        fontSize: 'xxx-large !important',
         transform: 'translate(-50%, -50%)'
+    },
+    backToHome:{
+        color:'blue',
+        fontSize:'2rem'
     },
     backToCartPageLink:{
         textDecoration:'none',
@@ -61,11 +59,11 @@ const FailedPaymentResult = (props)=>{
 
     const classes = useStyles();
 
-    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = localStorage.getItem('orderId');
     useEffect(async ()=>{
         const deleteMyOrder = async ()=>{
             try {
-                await deleteOrder(urlParams.get('order'))
+                await deleteOrder(orderId).then(()=>{localStorage.setItem('orderId',-1)})
             } catch (error) {
                 console.log(error)
             }
@@ -77,14 +75,14 @@ const FailedPaymentResult = (props)=>{
         <UserLayout>
             <Typography variant="h4" className={classes.header}>نتیجه ی پرداخت</Typography>
             <Grid item lg={8} md={10} sm ={10} xs={10} className={classes.container}>
-                <div className={classes.paymentIcon}><CloseIcon className={classes.paymentIconItem}/></div>
-                <Typography dir="rtl" variant="p" component="p">پرداخت موفقیت آمیز نبود. سفارش شما در انتظار پرداخت است.</Typography>
+                <div className={classes.info}>
+                    <div className={classes.paymentIcon}><CloseIcon className={classes.paymentIconItem}/></div>
+                    <Typography dir="rtl" variant="p" component="p">پرداخت موفقیت آمیز نبود. سفارش شما در انتظار پرداخت است.</Typography>
+                </div>
+                <Link className={classes.backToHome} to={PATHS.HOME}>بازگشت به سایت</Link>
             </Grid>
-            <div style={{textAlign: 'center'}}>
-                <Link className={classes.backToCartPageLink} to="/cart">برگشت به سبد خرید</Link> <Link className={classes.backToCartPageLink} to="/checkout">برگشت به صفحه ی خرید</Link>
-            </div>
         </UserLayout>
     )
 }
 
-export {FailedPaymentResult}*/
+export {FailedPaymentResult}

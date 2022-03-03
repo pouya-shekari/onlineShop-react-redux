@@ -82,7 +82,8 @@ const CheckoutPage = (props) =>{
                 products:productsInfo
             })
             const { data:{id:orderId} } = response
-            window.location.href='http://127.0.0.1:5501/payment.html'
+            localStorage.setItem('orderId',orderId)
+            window.location.href=`http://127.0.0.1:5501/payment.html`
             setState({
                 name:'', familyName:'', address:'', phone:'', deliveryTime:'',
             })

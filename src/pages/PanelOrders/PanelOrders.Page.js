@@ -71,11 +71,19 @@ const useStyles = makeStyles((theme)=>({
     tableContainer:{
         margin: '30px 20px'
     },
+    tableRow1: {
+        backgroundColor: 'whitesmoke'
+    },
+    tableRow2: {
+        backgroundColor: 'var(--light-face)'
+    },
     deliveryButton:{
         border: 'none',
-        backgroundColor:'var(--dark-blue)',
+        backgroundColor:'#2196f3',
         padding:'10px 20px',
-        color:'#fff'
+        color:'#fff',
+        borderRadius:'0.5rem',
+        cursor:'pointer'
     },
     modalDescriptionTypo:{
         width:'400px',
@@ -84,6 +92,9 @@ const useStyles = makeStyles((theme)=>({
     modalDescriptionTitle:{
         width:'200px',
         textAlign:'right',
+    },
+    productLink:{
+        color:'black'
     }
 }));
 
@@ -145,11 +156,6 @@ const PanelOrders = (props) => {
                 </div>
 
                 <div className={classes.modalBodyItem}>
-                    <Typography dir="rtl" variant="p" component="p" className={classes.modalDescriptionTitle} >زمان سفارش:</Typography>
-                    <Typography dir="rtl" className={classes.modalDescriptionTypo}>{new Date(deliveryRequestTime).toLocaleString('fa-ir')}</Typography>
-                </div>
-
-                <div className={classes.modalBodyItem}>
                     <Typography dir="rtl" variant="p" component="p" className={classes.modalDescriptionTitle} >زمان ثبت سفارش:</Typography>
                     <Typography dir="rtl" className={classes.modalDescriptionTypo}>{new Date(createdAt).toLocaleString('fa-IR')}</Typography>
                 </div>
@@ -166,7 +172,7 @@ const PanelOrders = (props) => {
                         </TableHead>
                         <TableBody>
                             {orderState.item.products.map((row, index) => (
-                                <TableRow style={{backgroundColor:index%2===0?'#cfba93':'var(--light-face)'}} key={row.id}>
+                                <TableRow style={{backgroundColor:index%2===0?'whitesmoke':'var(--light-face)'}} key={row.id}>
                                     <TableCell align="right">{e2p(numberWithCommas('' + row.allPrice))}</TableCell>
                                     <TableCell align="right">{e2p(numberWithCommas('' + row.count))}</TableCell>
                                     <TableCell align="right">{e2p(numberWithCommas('' + row.price))}</TableCell>

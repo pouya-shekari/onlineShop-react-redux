@@ -7,7 +7,7 @@ import {numberWithCommas} from "../../utils/numberWithCommas.utils"
 import {Link} from "react-router-dom"
 import {connect} from "react-redux"
 import {removeFromCart} from "../../redux/actions/card.action"
-import {deleteProduct, getProductWithId} from "../../api/products.api"
+import { getProductWithId} from "../../api/products.api"
 import { ToastContainer, toast } from 'react-toastify';
 import { cartSelector } from "../../redux/selects/user.select"
 import {PATHS} from '../../configs/routes.config'
