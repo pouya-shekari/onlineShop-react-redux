@@ -120,7 +120,7 @@ const CheckoutPage = (props) =>{
                             <div>
                                 <label for="phone">:تلفن همراه</label>
                             </div>
-                            <TextField InputProps={{ inputProps: { min: 11, max: 11 } }} required={true} onChange={e=>channgInputHandler(e, 'phone')} type="number" value={phone} className={classes.textField} id="phone" variant="outlined" />
+                            <TextField  required={true} onChange={e=>channgInputHandler(e, 'phone')} type="number" value={phone} className={classes.textField} id="phone" variant="outlined" />
                         </div>
                     </Grid>
 

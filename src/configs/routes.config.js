@@ -9,5 +9,7 @@ export const PATHS = {
   PANEL_PRODUCT:'/panel-product',
   PANEL_QUANTITY:'/panel-quantity',
   PANEL_ORDERS:'/panel-orders',
-  NOT_FOUND:'/not-found'
+  NOT_FOUND:'/not-found',
+  SUCCESS_PAYMENT_RESULT:'/success-payment-result',
+  FAILED_PAYMENT_RESULT:'/failed-payment-result'
 }
