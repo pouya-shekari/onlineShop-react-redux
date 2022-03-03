@@ -7,10 +7,11 @@ import {numberWithCommas} from "../../utils/numberWithCommas.utils"
 import {Link} from "react-router-dom"
 import {connect} from "react-redux"
 import {removeFromCart} from "../../redux/actions/card.action"
-import {getProductWithId} from "../../api/products.api"
+import {deleteProduct, getProductWithId} from "../../api/products.api"
 import { ToastContainer, toast } from 'react-toastify';
 import { cartSelector } from "../../redux/selects/user.select"
 import {PATHS} from '../../configs/routes.config'
+import {confirm} from "react-confirm-box";
 
 const styles = makeStyles({
     table: {
@@ -75,8 +76,27 @@ const styles = makeStyles({
 const basketPage = (props) => {
     const classes = styles()
 
-    const removeFromcartButtonClickHandler = (event, row)=>{
-        props.removeFromCart(row)
+     const removeFromcartButtonClickHandler = async (event, row)=>{
+        const options = {
+            render: (message, onConfirm, onCancel) => {
+                return (
+                    <>
+                        <div style={{backgroundColor:'white' , padding:'2rem 4rem',marginLeft:'-10rem' , display:'flex',flexDirection:'column' , gap:'2rem' }}>
+                            <h1 style={{fontSize:'2rem'}}> {message} </h1>
+                            <div style={{display:'flex', justifyContent:'space-between' , direction:'rtl'}}>
+                                <button style={{backgroundColor:'green',padding:'0.5rem 1rem' , outline:'none' , border:'none' , color:'white'  , width:'45%' , borderRadius:'0.5rem' , cursor:'pointer'}} onClick={onConfirm}> بله </button>
+                                <button style={{backgroundColor:'red',padding:'0.5rem 1rem' , outline:'none' , border:'none' , color:'white' , width:'45%'  , borderRadius:'0.5rem' , cursor:'pointer'}} onClick={onCancel}> خیر </button>
+
+                            </div>
+                        </div>
+                    </>
+                );
+            }
+        };
+        const result = await confirm("آیا از حذف این محصول مطمئن هستید؟", options);
+        if (result) {
+            props.removeFromCart(row)
+        }
     }
 
     const finalizeCart = async (event)=>{
