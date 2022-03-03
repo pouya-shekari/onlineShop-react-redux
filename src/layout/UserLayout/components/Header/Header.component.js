@@ -5,7 +5,10 @@ import {Navigation} from 'components';
 import {PATHS} from 'configs/routes.config';
 import {LINKS} from './Header.config';
 import React from "react";
-
+import {connect} from "react-redux"
+import {removeFromCart} from "../../../../redux/actions/card.action"
+import {e2p} from "../../../../utils/LanguageNumberConvertor.utils"
+import { cartSelector } from "../../../../redux/selects/user.select"
 
 const useStyle = makeStyles((theme) => ({
         toolbar:{
@@ -44,7 +47,7 @@ const useStyle = makeStyles((theme) => ({
     })
 )
 
-const Header = (props) => {
+const HeaderLayout = (props) => {
     const classes = useStyle()
     return(
         <>
@@ -65,7 +68,7 @@ const Header = (props) => {
                             vertical: 'top',
                             horizontal: 'left',
                         }}
-                               badgeContent={1}
+                               badgeContent={e2p(''+props.userCart.reduce((acc,cv)=>acc+cv.count, 0))}
                                color="secondary">
                             <ShoppingBasket />
                         </Badge>
@@ -77,4 +80,8 @@ const Header = (props) => {
     )
 }
 
+const mapStateToProps = (state) => ({userCart:cartSelector(state)})
+const mapDispatchToProps = (dispatch) => ({removeFromCart:product => dispatch(removeFromCart(product))})
+
+const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderLayout)
 export {Header}
