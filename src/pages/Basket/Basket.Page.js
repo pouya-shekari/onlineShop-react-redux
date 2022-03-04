@@ -114,8 +114,8 @@ const basketPage = (props) => {
             window.location.href = '/checkout'
         }
         else{
-            toast.error('متاسفانه موجودی محصولات مورد انتخاب شما کافی نیست.', {
-                position: "bottom-right",
+            toast.error('متاسفانه موجودی محصولات مورد انتخاب شما کافی نیست', {
+                position: "bottom-left",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
