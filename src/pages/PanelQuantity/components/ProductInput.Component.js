@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react"
 import classes from "./ProductInput.module.scss"
+import {toast} from "react-toastify";
 
 function ProductInput(props){
     const {editModeProducts, product, field, value, setEditModeProducts } = props
@@ -7,6 +8,18 @@ function ProductInput(props){
     const [productState, setProductsState] = useState({value:props.value, mode:'default'})
 
     const inputValueHandler = event => {
+        if (event.target.value < 0 ){
+            toast.error('مقدار نمی تواند منفی باشد.', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+            event.target.value = 0
+        }
         setProductsState({...productState, value:event.target.value})
     }
 
@@ -51,7 +64,7 @@ function ProductInput(props){
     return (
         productState.mode === 'default'
             ? <button onClick={inoutButtonClickHandler} className={classes.productInputRead}>{productState.value}</button>
-            : <input type="number" value={productState.value} onChange={inputValueHandler} className={classes.productInput}/>
+            : <input min={0} type="number" value={productState.value} onChange={inputValueHandler} className={classes.productInput}/>
     )
 }
 

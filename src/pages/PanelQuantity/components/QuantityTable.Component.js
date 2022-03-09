@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@material-ui/core';
 import { Link } from "react-router-dom"
+import { makeStyles } from '@material-ui/core/styles';
 import {Pagination, PaginationItem} from '@material-ui/lab';
-import {ProductInput} from "./ProductInput.Component";
 import {getProducts} from "../../../api/products.api"
+import {ProductInput} from "./ProductInput.Component";
 
 const useStyles = makeStyles({
     container:{

@@ -1,14 +1,14 @@
-import {Link} from 'react-router-dom';
+import React from "react";
 import {AppBar, makeStyles, Toolbar, Typography , Badge} from "@material-ui/core";
+import {connect} from "react-redux"
+import {Link} from 'react-router-dom';
 import {LocalMall, ShoppingBasket} from "@material-ui/icons";
+import { cartSelector } from "../../../../redux/selects/user.select"
+import {e2p} from "../../../../utils/LanguageNumberConvertor.utils"
+import {LINKS} from './Header.config';
 import {Navigation} from 'components';
 import {PATHS} from 'configs/routes.config';
-import {LINKS} from './Header.config';
-import React from "react";
-import {connect} from "react-redux"
 import {removeFromCart} from "../../../../redux/actions/card.action"
-import {e2p} from "../../../../utils/LanguageNumberConvertor.utils"
-import { cartSelector } from "../../../../redux/selects/user.select"
 
 const useStyle = makeStyles((theme) => ({
         toolbar:{
@@ -81,7 +81,7 @@ const HeaderLayout = (props) => {
 }
 
 const mapStateToProps = (state) => ({userCart:cartSelector(state)})
-const mapDispatchToProps = (dispatch) => ({removeFromCart:product => dispatch(removeFromCart(product))})
+const mapDispatchToProps = (dispatch) => ({removeFromCart:product => dispatch(removeFromCart(product)) })
 
 const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderLayout)
 export {Header}

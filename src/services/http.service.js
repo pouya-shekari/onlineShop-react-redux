@@ -1,12 +1,12 @@
 import axios from 'axios';
-import {PATHS} from 'configs/routes.config';
-import {LOGIN, REFRESH_TOKEN as REFRESH_TOKEN_URL, WHOAMI} from 'configs/url.config';
-import {ACCESS_TOKEN, REFRESH_TOKEN, BASE_URL, IS_LOGGED_IN} from 'configs/variables.config';
 import {toast} from 'react-toastify';
+import {ACCESS_TOKEN, REFRESH_TOKEN, BASE_URL, IS_LOGGED_IN} from 'configs/variables.config';
+import errorMap from 'assets/data/error-map';
+import history from './history.service';
+import {LOGIN, REFRESH_TOKEN as REFRESH_TOKEN_URL, WHOAMI} from 'configs/url.config';
+import {PATHS} from 'configs/routes.config';
 import {refreshToken} from 'redux/actions/user.action';
 import store from 'redux/store';
-import history from './history.service';
-import errorMap from 'assets/data/error-map';
 
 let canRefresh = true;
 

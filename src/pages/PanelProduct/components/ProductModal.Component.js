@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Button, Modal, Typography, MenuItem, Select, FormControl, TextField } from '@material-ui/core';
 import { Cancel } from '@material-ui/icons';
+import {toast} from "react-toastify";
+import { makeStyles } from '@material-ui/core/styles';
+import {getGroup} from "../../../api/groups.api"
+import http from "../../../services/http.service";
 import modules from "./ProductsModal.module.scss"
-import {TextEditor} from "./index"
 import {patchProduct} from "../../../api/products.api"
 import {postProduct} from "../../../api/products.api"
-import {getGroup} from "../../../api/groups.api"
+import styles from "../../PanelLogin/login.module.scss";
+import {TextEditor} from "./index"
 
 function getModalStyle() {
     return {
@@ -24,21 +27,25 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-between',
         flexDirection: 'column',
         backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        padding: theme.spacing(2, 4),
+        borderRadius:'0.5rem'
     },
     modalHeader:{
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        fontWeight:'bolder'
     },
     productGroup:{
-        width: 190,
+        width: '120px',
         display: 'flex',
         direction:'rtl',
-        marginBottom: '20px'
+        marginBottom: '20px',
+    },
+    selectInput:{
+       height:'5rem'
     },
     modalCloseButton:{
         display: 'flex',
@@ -62,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         justifyContent:'center',
         textAlign:'center',
-        marginTop: '100px'
+        marginTop: '60px'
     },
     productInoutLabel:{
         margin:'0 0 5px 0'
@@ -83,6 +90,7 @@ const ProductModal = (props) => {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     const [open, setOpen] = useState(false);
+    const [images,setImages] = useState([])
 
     const [productState, setProductState] = useState({product:{
             id:'', name:'', group:'', headgroup:'', image:'', price:'', quantity:'', description:''
@@ -106,7 +114,63 @@ const ProductModal = (props) => {
     };
 
     const inputChangeHandler = (event, name) => {
+        if(name == "quantity" || name == "price"){
+            if (event.target.value < 0 ){
+                toast.error('مقدار نمی تواند منفی باشد.', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+                event.target.value = 0
+            }
+        }
         setProductState({product:{...productState.product, [name]:event.target.value}})
+    }
+
+    const imageChangeHandler = (event,name) =>{
+        event.preventDefault()
+        const data = new FormData()
+        data.append('image',event.target.files[0])
+        try{
+            http.post('/upload',data).then(res=>{
+                setImages([...images,`${res.data.filename}`])
+                setProductState({product:{...productState.product, [name]:images}})
+                toast.success('تصویر با موفقیت بارگذاری شد.', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+
+            }).catch(e=>{
+                toast.error('خطا در بارگذاری تصویر', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        }catch (e){
+            toast.error('خطا در بارگذاری تصویر', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+        }
     }
 
     useEffect( ()=>{
@@ -135,39 +199,82 @@ const ProductModal = (props) => {
 
     const inputEl = useRef(null)
 
+
+
     const submitButtonHandler = async(event, product) => {
         event.preventDefault()
         const {mode} = props
         const {name , description, group, id, price} = product
-        const headgroup = groupsState.find(g => g.name === group).headgroup
         let operationSuccess = false
         if(mode==='edit'){
-            const formdata = new FormData();
-            if(inputEl.current.files[0])
-                formdata.append("image", inputEl.current.files[0]);
-            formdata.append("name", name);
-            formdata.append("group", group);
-            formdata.append("headgroup", headgroup);
-            formdata.append("description", description);
-            await patchProduct(formdata , id)
+            const headgroup = groupsState.find(g => g.name === group).headgroup
+            const dataToSend = {
+                "image":images,
+                "name": name,
+                "group": group,
+                "headgroup": headgroup,
+                "description": description,
+                "price": price,
+                "quantity": quantity,
+            }
+
+            await patchProduct(dataToSend , id).then(()=>{
+                toast.success('کالای مورد نظر با موفقیت ویرایش شد.', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
             operationSuccess = true
         }
         else if (mode==='add'){
-            const formdata = new FormData();
-            formdata.append("image", inputEl.current.files[0]);
-            formdata.append("name", name);
-            formdata.append("group", group);
-            formdata.append("headgroup", headgroup);
-            formdata.append("description", description);
-            formdata.append("price", price);
-            formdata.append("quantity", quantity);
-            await postProduct(formdata)
-            operationSuccess = true
+            if(name && group && description && price && quantity){
+                const headgroup = groupsState.find(g => g.name === group).headgroup
+                const dataToSend = {
+                    "image":images,
+                    "name": name,
+                    "group": group,
+                    "headgroup": headgroup,
+                    "description": description,
+                    "price": price,
+                    "quantity": quantity,
+
+            }
+                await postProduct(dataToSend).then(()=>{
+                    toast.success('کالای مورد نظر با موفقیت اضافه شد.', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+
+                operationSuccess = true
+            }
+            else{
+                toast.error('وارد کردن تمامی فیلدها الزامی است.', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+                operationSuccess = false
+            }
         }
         if(operationSuccess){
-            window.location.reload();
+
+            setTimeout(()=>window.location.reload() , 3000)
         }
-        handleClose()
     }
 
     const {id, name, description, group, price, quantity} = productState.product
@@ -179,21 +286,23 @@ const ProductModal = (props) => {
                 </button>
                 <Typography>افزودن / ویرایش کالا</Typography>
             </header>
-            <form>
+            <form onSubmit={(event)=>submitButtonHandler(event,  productState.product)}>
 
                 <div className={classes.productInputContainer}>
                     <label className={classes.productInoutLabel}>نام کالا:</label>
                     <TextField dir="rtl" placeholder="مثال : گوشی 1" type="text" variant="outlined" value={name} onChange={(event)=>inputChangeHandler(event, 'name')}/>
                 </div>
 
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
-                    <span className={classes.productInoutLabel}>:تصویر کالا</span>
-                    <label className={modules.input_file_label}>
-                        <span className={modules.upload_button}>Browse</span>
-                        <input ref={inputEl} id='input' type="file" className={modules.input_file} accept='image/*'  onChange={(event)=>inputChangeHandler(event, '')}/>
-                        <span className={modules.file_name} >file</span>
-                    </label>
-                </div>
+               <form style={{display: 'flex' , alignItems:'center' , gap:'1rem'}}>
+                   <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end' , flexGrow:1 }}>
+                       <label className={classes.productInoutLabel}>:تصویر کالا</label>
+                       <label className={modules.input_file_label}>
+                           <span className={modules.upload_button}>انتخاب تصویر</span>
+                           <input ref={inputEl} id='input' type="file" className={modules.input_file} accept='image/*' onChange={(event)=>{imageChangeHandler(event,"image")}} />
+                           <span className={modules.file_name} >تصویر</span>
+                       </label>
+                   </div>
+               </form>
 
 
                 <div className={classes.priceAndQuantityContainer}>
@@ -201,6 +310,7 @@ const ProductModal = (props) => {
                     <FormControl className={classes.productGroup}>
                         <label  className={classes.productInoutLabel}>دسته بندی:</label>
                         <Select
+                            className={classes.selectInput}
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             variant="outlined"
@@ -208,21 +318,24 @@ const ProductModal = (props) => {
                             onChange={(event)=>inputChangeHandler(event , 'group')}
                         >
                             {
-                                groupsState.length>0 ? groupsState.map(group =><MenuItem key={id} value={group.name}>{group.name}</MenuItem>) : null
+                                groupsState.length>0 ? groupsState.map(group =><MenuItem style={{fontSize:'1.5rem'}} key={id} value={group.name}>{group.name}</MenuItem>) : null
                             }
                         </Select>
                     </FormControl>
 
                     {
-                        props.mode==='add' ? (<><div className={classes.productInputContainer}>
-                            <label className={classes.productInoutLabel}>موجودی:</label>
-                            <TextField style={{width:'190px'}} dir="rtl" type="number" variant="outlined" value={quantity} onChange={(event)=>inputChangeHandler(event, 'quantity')}/>
-                        </div>
+                        props.mode==='add' ? (
+                            <>
+                                <div className={classes.productInputContainer}>
+                                    <label className={classes.productInoutLabel}>موجودی:</label>
+                                    <TextField InputProps={{ inputProps: { min: 0 } }} style={{width:'180px'}} dir="rtl" type="number" variant="outlined" value={quantity} onChange={(event)=>inputChangeHandler(event, 'quantity')}/>
+                                </div>
 
-                            <div className={classes.productInputContainer}>
-                                <label className={classes.productInoutLabel}>قیمت:</label>
-                                <TextField style={{width:'190px'}} dir="rtl" type="number" variant="outlined" value={price} onChange={(event)=>inputChangeHandler(event, 'price')}/>
-                            </div></>) : null
+                                <div className={classes.productInputContainer}>
+                                    <label className={classes.productInoutLabel}>قیمت:</label>
+                                    <TextField InputProps={{ inputProps: { min: 0} }} style={{width:'180px'}} dir="rtl" type="number" variant="outlined" value={price} onChange={(event)=>inputChangeHandler(event, 'price')}/>
+                                </div>
+                            </>) : null
                     }
                 </div>
 
@@ -232,7 +345,7 @@ const ProductModal = (props) => {
                 </div>
 
                 <footer className={classes.modalFooter}>
-                    <Button  type="submit" color="primary" background="primary" onClick={(event)=>submitButtonHandler(event,  productState.product)}>ذخیره</Button>
+                    <Button  type="submit" color="primary" background="primary!important" >ذخیره</Button>
                 </footer>
             </form>
         </div>

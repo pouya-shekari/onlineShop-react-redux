@@ -1,18 +1,21 @@
 import {PATHS} from 'configs/routes.config';
-import {useRef} from 'react';
-import {Helmet} from 'react-helmet';
 import {connect} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
-import {Link} from 'react-router-dom'
-import {login} from 'redux/actions/user.action';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import {Helmet} from 'react-helmet';
+import {Link} from 'react-router-dom'
+import {login} from 'redux/actions/user.action';
+import {useNavigate} from 'react-router-dom';
+import {useRef} from 'react';
+import {toast} from 'react-toastify';
 import styles from './login.module.scss'
+
 
 const PanelLoginPage = props => {
 
     const formRef = useRef();
     const navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,20 +28,23 @@ const PanelLoginPage = props => {
             console.log('submit: ', response);
         } catch (e) {
 
+            toast.error('نام کاربری یا رمز عبور اشتباه است.', {
+                position: "bottom-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                className:styles.errors,
+            });
         }
     };
-
-    const handleBlur = (e) => {
-        if (!formRef.current) return;
-
-        const form = new FormData(formRef.current);
-        const data = Object.fromEntries(form);
-    }
 
     return (
         <>
             <Helmet>
-                <title>Project | Login</title>
+                <title>صغحه ورود</title>
             </Helmet>
             <div className={styles.loginPage}>
                 <div className={styles.userIcon}>
@@ -49,13 +55,13 @@ const PanelLoginPage = props => {
                     <div className={styles.inputMargin}>
                         <label className={styles.loginLabels} htmlFor="username">نام کاربری</label>
                         <div>
-                            <input className={styles.loginInput} required={true} name="username"  id="username" type="text" placeholder="نام کاربری ..." />
+                            <input className={styles.loginInput}  name="username"  id="username" type="text" placeholder="نام کاربری ..." />
                         </div>
                     </div>
                     <div className={styles.inputMargin}>
                         <label className={styles.loginLabels} htmlFor="password">رمز عبور</label>
                         <div>
-                            <input className={styles.loginInput} required={true} name="password" id="password" type="password" placeholder="کلمه عبور ..." />
+                            <input className={styles.loginInput} name="password" id="password" type="password" placeholder="کلمه عبور ..." />
                         </div>
                     </div>
 

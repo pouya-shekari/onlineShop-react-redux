@@ -1,15 +1,15 @@
 import {useState , useEffect} from "react"
-import {AdminLayout} from "../../layout";
-import {Helmet} from 'react-helmet'
-import {ProductsTable, ProductModal} from "./components/index"
-import {Typography, Button, Grid} from "@material-ui/core"
-import { makeStyles } from '@material-ui/core/styles';
-import {deleteProduct } from "../../api/products.api"
-import {connect} from 'react-redux';
-import {fetchProducts} from '../../redux/actions/product.action';
 import { confirm } from "react-confirm-box";
+import {connect} from 'react-redux';
+import {Helmet} from 'react-helmet'
+import { makeStyles } from '@material-ui/core/styles';
 import { toast } from 'react-toastify';
+import {Typography, Button, Grid} from "@material-ui/core"
 import 'react-toastify/dist/ReactToastify.css';
+import {AdminLayout} from "../../layout";
+import {deleteProduct } from "../../api/products.api"
+import {fetchProducts} from '../../redux/actions/product.action';
+import {ProductsTable, ProductModal} from "./components/index"
 
 const useStyles = makeStyles({
     container:{
@@ -50,7 +50,7 @@ const PanelProductPage  = (props) => {
             render: (message, onConfirm, onCancel) => {
                 return (
                     <>
-                        <div style={{backgroundColor:'white' , padding:'2rem 4rem',marginLeft:'-10rem' , display:'flex',flexDirection:'column' , gap:'2rem' }}>
+                        <div style={{backgroundColor:'white' ,borderRadius:'0.5rem' , marginTop:'-5rem', padding:'2rem 4rem',marginLeft:'-10rem' , display:'flex',flexDirection:'column' , gap:'2rem' }}>
                             <h1 style={{fontSize:'2rem'}}> {message} </h1>
                             <div style={{display:'flex', justifyContent:'space-between' , direction:'rtl'}}>
                                 <button style={{backgroundColor:'green',padding:'0.5rem 1rem' , outline:'none' , border:'none' , color:'white'  , width:'45%' , borderRadius:'0.5rem' , cursor:'pointer'}} onClick={onConfirm}> بله </button>
@@ -73,12 +73,12 @@ const PanelProductPage  = (props) => {
     return (
         <>
             <Helmet>
-                <title>Project | Products Panel</title>
+                <title>پنل کالاها</title>
             </Helmet>
 
             <AdminLayout>
                 <Grid item lg={8} md={10} sm ={10} xs={10} className={classes.container}  onClick={openModalButtonHandler}>
-                    <Button variant="contained" color="primary" >افزودن کالا</Button>
+                    <Button variant="contained" style={{backgroundColor:'#2196f3' , color:'white'}} >افزودن کالا</Button>
                     <Typography variant="h4" component="p">مدیریت کالا ها</Typography>
                 </Grid>
                 <ProductsTable

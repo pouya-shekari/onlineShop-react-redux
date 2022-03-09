@@ -1,15 +1,15 @@
 import React from 'react'
 import { Fragment } from "react"
-import {UserLayout} from "../../layout";
-import { Grid, makeStyles } from "@material-ui/core"
 import {useEffect, useState} from "react"
-import {getProducts} from "../../api/products.api"
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import { Spinner, ProductCard} from "../../components"
-import {getGroup} from "../../api/groups.api"
+import { Grid, makeStyles } from "@material-ui/core"
+import {Helmet} from 'react-helmet'
 import {e2p} from "../../utils/LanguageNumberConvertor.utils"
+import {getGroup} from "../../api/groups.api"
+import {getProducts} from "../../api/products.api"
 import {numberWithCommas} from "../../utils/numberWithCommas.utils"
-
+import {Spinner, ProductCard , SearchInput} from "../../components"
+import {UserLayout} from "../../layout";
 
 const useStyles = makeStyles((theme) => ({
     groupTitle:{
@@ -51,6 +51,7 @@ const Home = (props)=>{
     }, [])
 
     const pageContent = (<Grid container className={classes.productsContainer}>
+        <SearchInput />
         {
             productsState.products.map(product=>{
                 const {name:groupName, id:groupId} = product.group
@@ -80,6 +81,9 @@ const Home = (props)=>{
 
     return(
         <>
+            <Helmet>
+                <title>صفحه اصلی</title>
+            </Helmet>
             <UserLayout>
                 <Spinner isLoading={loading.show} content={pageContent} />
             </UserLayout>

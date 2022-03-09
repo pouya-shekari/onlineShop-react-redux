@@ -1,6 +1,6 @@
 import {Component} from 'react';
-import {Route, Routes, unstable_HistoryRouter as BrowserRouter} from 'react-router-dom';
 import {PATHS} from 'configs/routes.config';
+import {Route, Routes, unstable_HistoryRouter as BrowserRouter} from 'react-router-dom';
 import * as Page from 'pages';
 import history from 'services/history.service';
 import {ProtectedRoute, PublicRoute , PrivateRoute} from './components';

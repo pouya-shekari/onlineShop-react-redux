@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from '@material-ui/core';
-import {Pagination , PaginationItem} from '@material-ui/lab'
 import { Link } from "react-router-dom"
+import { makeStyles } from '@material-ui/core/styles';
+import {Pagination , PaginationItem} from '@material-ui/lab'
 import {getProducts} from "../../../api/products.api"
 
 const useStyles = makeStyles({
@@ -25,12 +25,25 @@ const useStyles = makeStyles({
     table: {
         minWidth: 650,
     },
-    editDeleteButton: {
-        backgroundColor: 'transparent',
+    editButton: {
+        backgroundColor: '#2196f3',
         border: 'none',
-        color: '#463197',
-        textDecoration: 'underline'
+        color: 'white',
+        textDecoration: 'none',
+        borderRadius:'0.5rem',
+        marginLeft:'2rem',
+        padding:'0.5rem 1.5rem',
+        cursor:'pointer'
     },
+    deleteButton:{
+        backgroundColor: 'red',
+        border: 'none',
+        color: 'white',
+        textDecoration: 'none',
+        borderRadius:'0.5rem',
+        padding:'0.5rem 1.5rem',
+        cursor:'pointer'
+    }
 
 });
 
@@ -88,7 +101,7 @@ const ProductsTable = (props) => {
     const {openModalEditButtonHandler,openModalDeleteButtonHandler} = props
     return (
         <Grid item lg={8} md={10} sm ={10} xs={10} className={classes.container}>
-            <TableContainer component={Paper}>
+            <TableContainer style={{overflowY:"hidden"}} component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead className={classes.tableHeading}>
                         <TableRow>
@@ -103,14 +116,14 @@ const ProductsTable = (props) => {
                             const { id, headgroup, group, name, image, description } = row
                             return (
                                 <TableRow className={index%2===0? classes.tableRow1 : classes.tableRow2} key={id}>
-                                    <TableCell align="right" component="th" scope="row">
-                                        <button className={classes.editDeleteButton} onClick={(row)=>openModalEditButtonHandler({ id, headgroup, group, name, image, description })}>ویرایش</button>
-                                        <button className={classes.editDeleteButton} onClick={(row)=>openModalDeleteButtonHandler({ id, headgroup, group, name, image, description })}>حذف</button>
+                                    <TableCell align="left" component="th" scope="row">
+                                        <button className={classes.deleteButton} onClick={(row)=>openModalDeleteButtonHandler({ id, headgroup, group, name, image, description })}>حذف</button>
+                                        <button className={classes.editButton} onClick={(row)=>openModalEditButtonHandler({ id, headgroup, group, name, image, description })}>ویرایش</button>
                                     </TableCell>
                                     <TableCell align="right">{`${headgroup}/${group}`}</TableCell>
                                     <TableCell align="right">{name}</TableCell>
                                     <TableCell style={{display:'flex'}} align="right" component="th" scope="row">
-                                        <div style={{width: '70px', height:'70px', overflow: 'hidden'}}><img style={{width:"100%"}} src={`http://localhost:3001${image}`}/></div>
+                                        <div style={{width: '70px', height:'70px', overflow: 'hidden'}}><img style={{width:"100%" , height:'100%'}} src={`http://localhost:3001/files/${image[0]}`}/></div>
                                     </TableCell>
                                 </TableRow>
                             )

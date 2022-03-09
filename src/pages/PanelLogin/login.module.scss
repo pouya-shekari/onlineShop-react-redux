@@ -16,6 +16,13 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+}
+
+@media (max-width: 860px) {
+  .mainForm{
+    width: auto;
+  }
 }
 
 .userIcon{
@@ -32,6 +39,8 @@
   justify-content: center;
   font-size: 2rem;
   font-family: IRANSansX-Bold;
+  line-height: 150%;
+  text-align: center;
 }
 
 .button , .loginInput{
@@ -48,6 +57,8 @@
 .loginInput{
   padding: 1.2rem;
   background-color: #ececec;
+  direction: rtl;
+  color:black;
 }
 
 .loginInput:focus{
@@ -75,4 +86,9 @@
   display: flex;
   color: black!important;
   margin-top: 1rem;
+}
+
+.errors{
+  background-color: antiquewhite!important;
+  color:black!important;
 }

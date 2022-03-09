@@ -12,12 +12,13 @@
   box-sizing: border-box;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.23);
-  padding: 3px 6px 3px 3px;
+  padding: 0px 0px 0px 3px;
   border-radius: 4px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
+  direction: rtl;
 }
 
 .upload_button {

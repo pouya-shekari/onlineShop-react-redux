@@ -1,11 +1,12 @@
-import {UserLayout} from "../../layout";
-import {Typography, Grid} from "@material-ui/core"
-import {makeStyles} from "@material-ui/core/styles"
+import React, {useEffect} from "react"
 import CloseIcon from '@material-ui/icons/Close';
+import {Helmet} from "react-helmet";
 import {Link} from "react-router-dom"
-import {useEffect} from "react"
+import {makeStyles} from "@material-ui/core/styles"
+import {Typography, Grid} from "@material-ui/core"
 import {deleteOrder} from "../../api/orders.api"
 import {PATHS} from "../../configs/routes.config";
+import {UserLayout} from "../../layout";
 
 const useStyles = makeStyles((theme) => ({
     header:{
@@ -63,7 +64,7 @@ const FailedPaymentResult = (props)=>{
     useEffect(async ()=>{
         const deleteMyOrder = async ()=>{
             try {
-                await deleteOrder(orderId).then(()=>{localStorage.setItem('orderId',-1)})
+                await deleteOrder(orderId).then(()=>{localStorage.setItem('orderId',-2)})
             } catch (error) {
                 console.log(error)
             }
@@ -72,16 +73,21 @@ const FailedPaymentResult = (props)=>{
     }, [])
 
     return (
-        <UserLayout>
-            <Typography variant="h4" className={classes.header}>نتیجه ی پرداخت</Typography>
-            <Grid item lg={8} md={10} sm ={10} xs={10} className={classes.container}>
-                <div className={classes.info}>
-                    <div className={classes.paymentIcon}><CloseIcon className={classes.paymentIconItem}/></div>
-                    <Typography dir="rtl" variant="p" component="p">پرداخت موفقیت آمیز نبود. سفارش شما در انتظار پرداخت است.</Typography>
-                </div>
-                <Link className={classes.backToHome} to={PATHS.HOME}>بازگشت به سایت</Link>
-            </Grid>
-        </UserLayout>
+        <>
+            <Helmet>
+                <title>پرداخت ناموفق</title>
+            </Helmet>
+            <UserLayout>
+                <Typography variant="h4" className={classes.header}>نتیجه ی پرداخت</Typography>
+                <Grid item lg={8} md={10} sm ={10} xs={10} className={classes.container}>
+                    <div className={classes.info}>
+                        <div className={classes.paymentIcon}><CloseIcon className={classes.paymentIconItem}/></div>
+                        <Typography dir="rtl" variant="p" component="p">پرداخت موفقیت آمیز نبود. سفارش شما در انتظار پرداخت است.</Typography>
+                    </div>
+                    <Link className={classes.backToHome} to={PATHS.HOME}>بازگشت به سایت</Link>
+                </Grid>
+            </UserLayout>
+        </>
     )
 }
 

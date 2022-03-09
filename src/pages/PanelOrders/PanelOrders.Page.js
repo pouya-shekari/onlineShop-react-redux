@@ -1,12 +1,13 @@
-import {AdminLayout} from "../../layout";
-import {OrdersTable} from "./components/OrderTable.Component"
-import { Modal,Typography, Grid, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@material-ui/core"
-import { makeStyles } from '@material-ui/core/styles';
-import {useState, useEffect} from "react"
+import React, {useState, useEffect} from "react"
 import CloseIcon from '@material-ui/icons/Close';
+import {Helmet} from 'react-helmet'
+import { makeStyles } from '@material-ui/core/styles';
+import { Modal,Typography, Grid, Radio, RadioGroup, FormControlLabel, FormControl, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@material-ui/core"
+import {Link} from "react-router-dom"
+import {AdminLayout} from "../../layout";
 import {e2p} from "../../utils/LanguageNumberConvertor.utils"
 import {numberWithCommas} from "../../utils/numberWithCommas.utils"
-import {Link} from "react-router-dom"
+import {OrdersTable} from "./components/OrderTable.Component"
 import {patchOrder} from "../../api/orders.api"
 
 const useStyles = makeStyles((theme)=>({
@@ -193,8 +194,11 @@ const PanelOrders = (props) => {
     );
 
     return (
-        <AdminLayout>
-
+        <>
+            <Helmet>
+                <title>پنل موجودی ها</title>
+            </Helmet>
+            <AdminLayout>
                 <Grid item lg={8} md={10} sm ={10} xs={10} className={classes.container}>
                     <FormControl component="div">
                         <form>
@@ -217,7 +221,9 @@ const PanelOrders = (props) => {
                     {body}
                 </Modal>
 
-        </AdminLayout>
+            </AdminLayout>
+        </>
+
     )
 }
 

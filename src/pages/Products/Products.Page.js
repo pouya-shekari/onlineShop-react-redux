@@ -1,14 +1,15 @@
 import React from 'react'
-import {UserLayout} from "../../layout";
 import {useEffect, useState} from "react"
 import {Grid , makeStyles, Typography} from "@material-ui/core"
-import {Sidebar, ProductCard , Spinner} from "../../components"
+import {Helmet} from "react-helmet";
+import {Link} from "react-router-dom";
+import {Pagination, PaginationItem} from "@material-ui/lab";
+import {e2p} from "../../utils/LanguageNumberConvertor.utils"
 import {getGroup} from "../../api/groups.api"
 import {getProducts} from "../../api/products.api"
-import {e2p} from "../../utils/LanguageNumberConvertor.utils"
 import {numberWithCommas} from "../../utils/numberWithCommas.utils"
-import {Pagination, PaginationItem} from "@material-ui/lab";
-import {Link} from "react-router-dom";
+import {Sidebar, ProductCard , Spinner} from "../../components"
+import {UserLayout} from "../../layout";
 
 const useStyles = makeStyles((theme) => ({
     asideContainer:{
@@ -112,6 +113,9 @@ const Products = (props) =>{
 
     return (
         <div>
+            <Helmet>
+                <title>دسته های کالا</title>
+            </Helmet>
             <UserLayout>
                 <Spinner isLoading={loading.show} content={pageContent} />
                 <Pagination style={{display:'flex' , justifyContent:'center'}}

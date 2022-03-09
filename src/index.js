@@ -1,26 +1,27 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {AppRoute} from 'routes/App.route';
+import ReactDOM from 'react-dom';
 import { ToastContainer } from 'react-toastify';
-import store from './redux/store';
+import 'react-toastify/dist/ReactToastify.css';
+import {AppRoute} from 'routes/App.route';
 import 'assets/styles/global.scss';
+import store from './redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-        <AppRoute/>
         <ToastContainer
-            position="bottom-left"
+            position="bottom-right"
             autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
-            rtl={false}
+            rtl
             pauseOnFocusLoss
             draggable
             pauseOnHover
         />
+        <AppRoute/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

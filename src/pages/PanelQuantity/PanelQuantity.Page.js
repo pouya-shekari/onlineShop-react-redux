@@ -1,9 +1,11 @@
-import {AdminLayout} from "../../layout";
-import {QuantityTable} from "./components/QuantityTable.Component"
-import {Typography, Button, Grid} from "@material-ui/core"
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from "react";
+import {Helmet} from 'react-helmet'
+import { makeStyles } from '@material-ui/core/styles';
+import {toast} from "react-toastify";
+import {Typography, Button, Grid} from "@material-ui/core"
+import {AdminLayout} from "../../layout";
 import {patchProduct} from "../../api/products.api";
+import {QuantityTable} from "./components/QuantityTable.Component"
 
 const useStyles = makeStyles({
     container:{
@@ -39,13 +41,25 @@ const PanelQuantity = () => {
                 await patchProduct({...obj} , id)
             }
         })
+        toast.success('کالای مورد نظر با موفقیت ویرایش شد', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        })
     }
 
     return (
         <>
+            <Helmet>
+                <title>پنل موجودی ها</title>
+            </Helmet>
             <AdminLayout>
                 <Grid item lg={8} md={10} sm ={10} xs={10} className={classes.container}>
-                    <Button variant="contained" color="primary" onClick={(event)=>saveButtonClickHandler(event, editingProductsState)}>ذخیره</Button>
+                    <Button id="SaveButtonQuantity" variant="contained" color="primary" onClick={(event)=>saveButtonClickHandler(event, editingProductsState)}>ذخیره</Button>
                     <Typography variant="h4" component="p">مدیریت موجودی و قیمت ها</Typography>
                 </Grid>
                 <QuantityTable setEditingProductsState={setEditingProductsState} editingProductsState={editingProductsState} editmode={editmode}/>

@@ -1,18 +1,19 @@
-import {UserLayout} from "../../layout"
-import { Link} from "react-router-dom"
-import {useEffect, useState} from "react"
-import {makeStyles, Typography } from "@material-ui/core"
-import { getProductWithId} from "../../api/products.api"
-import {e2p} from "../../utils/LanguageNumberConvertor.utils"
-import {numberWithCommas} from "../../utils/numberWithCommas.utils"
-import ControlPointIcon from '@material-ui/icons/ControlPoint';
-import {connect} from "react-redux"
-import {addToCart} from "../../redux/actions/card.action"
-import { ToastContainer, toast } from 'react-toastify';
+import React, {useEffect, useState} from "react"
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import {Spinner} from "../../components"
-import {getGroup} from "../../api/groups.api"
+import {connect} from "react-redux"
+import ControlPointIcon from '@material-ui/icons/ControlPoint';
+import {Helmet} from "react-helmet";
+import {Link} from "react-router-dom"
+import {makeStyles, Typography } from "@material-ui/core"
+import { ToastContainer, toast } from 'react-toastify';
+import {addToCart} from "../../redux/actions/card.action"
 import { cartSelector } from "../../redux/selects/user.select"
+import {e2p} from "../../utils/LanguageNumberConvertor.utils"
+import {getGroup} from "../../api/groups.api"
+import { getProductWithId} from "../../api/products.api"
+import {numberWithCommas} from "../../utils/numberWithCommas.utils"
+import {Spinner} from "../../components"
+import {UserLayout} from "../../layout"
 
 const useStyles = makeStyles((theme)=>({
     productInfo:{
@@ -137,6 +138,15 @@ const ProductPage = (props) => {
         if(response.data.quantity>0)
             if( (!productInCart) ||  cartcount.quantity<=response.data.quantity ){
                 props.addToCart(product, +cartcount.quantity)
+                toast.success('کالا با موفقیت به سبد خرید اضافه شد.', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
                 return
             }
         toast.error('متاسفانه موجودی محصول کافی نیست.', {
@@ -151,9 +161,34 @@ const ProductPage = (props) => {
         });
     }
 
-    const cartQuantityChangeHandler = (event)=>{
-        event.target.value = event.target.value.replaceAll(/[.-]/g, '')
-        setCartCount({ quantity: event.target.value})
+    const cartQuantityChangeHandler = (event,quantity)=>{
+        if (event.target.value < 1 ){
+            toast.error('مقدار نمی تواند کمتر از 1 باشد.', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+            event.target.value = 1
+        }
+        else if (event.target.value > quantity ){
+            toast.error('مقدار بیش از موجودی کالا می باشد.', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+            event.target.value = 1
+        }
+        else{
+            setCartCount({ quantity: event.target.value})
+        }
     }
 
     const {name, description, image, group='', headgroup, price, id, groupId=''} = productsState
@@ -163,7 +198,7 @@ const ProductPage = (props) => {
             <section className={classes.productInfo}>
                 <div className={classes.productMainInfo}>
                     <div className={classes.productImage}>
-                        <img className={classes.productImageItem} src={`http://localhost:3001${image}`}/>
+                        <img className={classes.productImageItem} src={`http://localhost:3001/files/${image}`}/>
                     </div>
                     <div style={{display:'flex' , flexDirection:'column' , gap:'2rem'}}>
                         <Typography className={classes.productName} variant="h4" component="h1">{name}</Typography>
@@ -179,7 +214,7 @@ const ProductPage = (props) => {
                             <button className={[classes.cartButton]} onClick={(event)=>addToCartButtonClickHandler(event, {name,price:+price,id})}>
                                 <ControlPointIcon className={classes.lineHeight}/><div className={classes.lineHeight}>افزودن به سبد خرید</div>
                             </button>
-                            <input onChange={cartQuantityChangeHandler} value={cartcount.quantity} max={quantity} min="1" className={classes.quantityInput} type="number" />
+                            <input onChange={(event)=>cartQuantityChangeHandler(event,props.quantity)} value={cartcount.quantity} max={quantity} min="1" className={classes.quantityInput} type="number" />
                         </div>
                     </div>
                 </div>
@@ -190,10 +225,12 @@ const ProductPage = (props) => {
 
     return (
         <div>
+            <Helmet>
+                <title>صفحه محصول</title>
+            </Helmet>
             <UserLayout>
                 <Spinner isLoading={loading.show} content={pageContent} />
             </UserLayout>
-
             <ToastContainer rtl={true}/>
         </div>
     )
