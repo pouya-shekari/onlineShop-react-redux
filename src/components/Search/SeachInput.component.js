@@ -10,7 +10,6 @@ const SearchInput = () =>{
 
     const setProducts = async (value='', limit='')=>{
         const {data} = await  getProducts({ params:{ name_like: value, _limit:limit} })
-        console.log(data)
         setState({ options:data})
     }
     const onAutoCompleteInputHandler = ({target:{value}}) => {
