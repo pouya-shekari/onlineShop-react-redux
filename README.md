@@ -1,4 +1,4 @@
-# Online Shopping
+# Online Shop with React and Redux
 
 This is a personal project and i used React library for this
 single page application.in this App you can Buy stuff and also in panel page you can add products or
