@@ -45,4 +45,60 @@ you must run it on vs code and live server extention on port 5500.
 **Client:** React, Redux, MUI,Sass,axios
 
 **Server:** Node, Json-server
+
+## Preview
+home page:
+
+![alt text](https://s6.uupload.ir/files/home_2939.png)
         
+products page:
+
+![alt text](https://s6.uupload.ir/files/products_0fiw.png)
+
+product page:
+
+![alt text](https://s6.uupload.ir/files/product_oeoj.png)
+
+basket page:
+
+![alt text](https://s6.uupload.ir/files/basket_hd9.png)
+
+checkout page:
+
+![alt text](https://s6.uupload.ir/files/checkout_m506.png)
+
+payment page:
+
+![alt text](https://s6.uupload.ir/files/payment_eqce.png)
+
+failed payment page:
+
+![alt text](https://s6.uupload.ir/files/failedpayment_zkq1.png)
+
+success payment page:
+
+![alt text](https://s6.uupload.ir/files/successpayment_xqul.png)
+
+login page:
+
+![alt text](https://s6.uupload.ir/files/login_sseg.png)
+
+products panel page:
+
+![alt text](https://s6.uupload.ir/files/productspanel_0lz.png)
+
+add/edit product modal:
+
+![alt text](https://s6.uupload.ir/files/edit-add-prductmodal_xsyz.png)
+
+quantity page:
+
+![alt text](https://s6.uupload.ir/files/quantitypanel_ghb7.png)
+
+orders page:
+
+![alt text](https://s6.uupload.ir/files/orderspanel_42ub.png)
+
+order modal:
+
+![alt text](https://s6.uupload.ir/files/ordermodal_bu0.png)
