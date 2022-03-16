@@ -4,6 +4,12 @@ This is a personal project and i used React library for this
 single page application.in this App you can Buy stuff and also in panel page you can add products or
 edit all details of products.
 
+For login in admin panel:
+
+**username: admin**
+
+**password: admin**
+
 ## Installation
 
 first you must install packeages and run the backend in terminal with this codes
